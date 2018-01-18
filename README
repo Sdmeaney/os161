@@ -1,0 +1,68 @@
+####################################
+# Compiling the kernel assignments #
+####################################
+
+# Configure os161
+cd ~/os161/
+./configure --ostree="$HOME/os161/root" --toolprefix="sos-"
+
+# Configure kernel assignment
+cd kern/conf
+./config ASST0
+
+cd ../compile/ASST0
+
+# Make kernel assignment
+# Be sure to use "bmake" regular make will fail. 
+bmake depend
+bmake
+bmake install
+
+# Make os161
+cd ~/os161
+bmake
+
+# Copy the sys161 conf (probably only need to do this once)
+cp ~/sys161/sys161.conf root
+
+# Run assignment
+cd root
+sys161 kernel-ASST0
+
+##################
+# Toolchain Info #
+##################
+
+All toolchain binaries for os-161 (gcc, gdb, etc.) start with sos-
+
+Here is a list: 
+
+sos-addr2line
+sos-ar
+sos-as
+sos-c++filt
+sos-cpp
+sos-gcc
+sos-gcc-4.1.2
+sos-gccbug
+sos-gcov
+sos-gdb
+sos-gdbtui
+sos-ld
+sos-nm
+sos-objcopy
+sos-objdump
+sos-ranlib
+sos-readelf
+sos-run
+sos-size
+sos-strings
+sos-strip
+
+they live in ~/sys161/bin (which is a symlink)
+
+#############################################################################
+
+Clean version of os161: git clone https://github.com/arthurdent/os161.git
+
+#############################################################################

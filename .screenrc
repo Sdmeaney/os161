@@ -1,0 +1,29 @@
+# Skip the startup message
+startup_message off
+
+# Automatically detach on hangup.
+#autodetach on
+
+defutf8 on
+
+# If a screen dies, don't freeze the whole screen waiting for it.
+#nonblock on
+
+# Change default scrollback value for new windows
+defscrollback 10000
+#scrollback 10000
+
+# start with visual bell as default
+vbell off
+vbell_msg "!! %t (%n)"
+
+# Open some screens
+#screen -t bash
+#screen -t bash
+
+# look and feel
+hardstatus alwayslastline "%{= KW}%-w%{= kw}%n %t%{-}%+w %-= %c"
+
+term xterm
+# screen meta key 
+# escape "^@@"
