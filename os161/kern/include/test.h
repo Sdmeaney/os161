@@ -60,7 +60,6 @@ int semtest(int, char **);
 int locktest(int, char **);
 int cvtest(int, char **);
 
-int cus161(int, char **);
 
 #ifdef UW
 /* Another thread and synchronization test */
