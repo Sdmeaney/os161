@@ -174,7 +174,7 @@ lock_create(const char *name)
 	//
     //set currently locked status to null (since we just made it )
     // this is a struct *thread
-    lock->lock_locked == NULL;
+    lock->lock_locked = NULL;
 	//wchan is wait channel
 	lock -> lk_wchan = wchan_create(lock -> lk_name);
 	//if it goes wrong, delete the evidence and return
@@ -218,7 +218,7 @@ void
 lock_acquire(struct lock *lock)
 {
         // Write this
-        int release_flag;
+        //int release_flag;
 
         // Operations:
         // lock_acquire - Get the lock. Only one thread can hold the lock at the
