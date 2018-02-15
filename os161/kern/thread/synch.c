@@ -172,23 +172,41 @@ lock_create(const char *name)
 	//wchan is wait channel
 	lock -> lk_wchan = wchan_create(lock -> lk_name);
 	//if it goes wrong, delete the evidence and return
-        if(lock -> lk_wchan == NULL)
+    if(lock -> lk_wchan == NULL)
 	{
 	  kfree(lock -> lk_name);
   	  kfree(lock);
 	  return NULL;
 	}
+    //  spinlock_init(&sem->sem_lock);
+    spinlock_init(&lock->lk_lock);
 
-	//end added stuff 
+    //set currently locked status to null (since we just made it )
+    lock->locked_locked == NULL;
+
+	//end custom
         return lock;
 }
 
 void
 lock_destroy(struct lock *lock)
-{
+{       // if something goes horribly wrong
         KASSERT(lock != NULL);
 
         // add stuff here as needed
+
+    /* wchan_cleanup will assert if anyone's waiting on it */
+        //spinlock_cleanup(&sem->sem_lock);
+        //wchan_destroy(sem->sem_wchan);
+         //   kfree(sem->sem_name);
+         //   kfree(sem);
+
+    /* wchan_cleanup will assert if anyone's waiting on it */
+        spinlock_cleanup(&lock->lk_lock);
+        wchan_destroy(lock->lk_wchan);
+            kfree(lock->lk_name);
+            kfree(lock);
+        //end added stuff here
         
         kfree(lock->lk_name);
         kfree(lock);
@@ -198,6 +216,21 @@ void
 lock_acquire(struct lock *lock)
 {
         // Write this
+
+
+        // Operations:
+        // lock_acquire - Get the lock. Only one thread can hold the lock at the
+        // same time.
+        //spinlock_acquire(&sem->sem_lock);
+        // start our spinlock section
+        spinlock_acquire(&lock->lk_lock);
+
+        //releasing our spinlock section
+        spinlock_release(&lock->lk_lock);
+            wchan_sleep(lock->lk_wchan);
+
+            
+        //end write this
 
         (void)lock;  // suppress warning until code gets written
 }
