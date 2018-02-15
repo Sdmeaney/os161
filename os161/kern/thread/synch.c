@@ -223,11 +223,11 @@ lock_acquire(struct lock *lock)
         // same time.
         //spinlock_acquire(&sem->sem_lock);
         // start our spinlock section
- //       spinlock_acquire(&lock->lk_lock);
+       spinlock_acquire(&lock->lk_lock);
 
         //releasing our spinlock section
-//        spinlock_release(&lock->lk_lock);
-//            wchan_sleep(lock->lk_wchan);
+        spinlock_release(&lock->lk_lock);
+            wchan_sleep(lock->lk_wchan);
 
 
         //end write this

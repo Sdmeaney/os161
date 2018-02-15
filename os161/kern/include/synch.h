@@ -73,6 +73,7 @@ void V(struct semaphore *);
  * (should be) made internally.
  */
 struct lock {
+        struct spinlock lk_lock;
         char *lk_name;
 	struct wchan *lock_wchan;
 
