@@ -201,6 +201,7 @@ lock_destroy(struct lock *lock)
     /* wchan_cleanup will assert if anyone's waiting on it */
         spinlock_cleanup(&lock->lk_lock);
         wchan_destroy(lock->lk_wchan);
+            //lets not do this before we set lock_locked to null
             //kfree(lock->lk_name);
             //kfree(lock);
 
@@ -217,19 +218,36 @@ void
 lock_acquire(struct lock *lock)
 {
         // Write this
-
+        int release_flag;
 
         // Operations:
         // lock_acquire - Get the lock. Only one thread can hold the lock at the
         // same time.
         //spinlock_acquire(&sem->sem_lock);
-        // start our spinlock section
-       spinlock_acquire(&lock->lk_lock);
 
+        //priorities:
+        //1 spinlocks around lock_locked so it can't get tampered with
+        //2 can't path to a sleep while holding the spinlock and freeze everything
+        //3 1-to-1 for spinlock aq/rel
+        //4 don't aquire same spinlock more than once
+
+       while(true){ //infinite loop it until we just break on spinlock release
+       spinlock_acquire(&lock->lk_lock); //protect the compare for the if statement
+       if(lock->lock_locked == NULL) //if it's empty
+       {
+        //lock our thread in        
+        lock->lock_locked = curthread; // god bless curthread
         //releasing our spinlock section
         spinlock_release(&lock->lk_lock);
-            wchan_sleep(lock->lk_wchan);
+        break;
+       }
+       //so we don't have something not be null, then sleep with the spinlock
+       //this won't be touched by if null twice because it breaks71
+        spinlock_release(&lock->lk_lock);
 
+        // it's not your turn so sleep
+        wchan_sleep(lock->lk_wchan);
+        }
 
         //end write this
 
