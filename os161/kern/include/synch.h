@@ -81,8 +81,12 @@ struct lock {
 };
 
 struct lock *lock_create(const char *name);
-void lock_acquire(struct lock *);
+        struct wchan *lock_wchan;
+        struct spinlock lk_lock;
 
+void lock_acquire(struct lock *);
+        struct wchan *lock_wchan;
+        struct spinlock lk_lock;
 /*
  * Operations:
  *    lock_acquire - Get the lock. Only one thread can hold the lock at the
@@ -95,8 +99,12 @@ void lock_acquire(struct lock *);
  * These operations must be atomic. You get to write them.
  */
 void lock_release(struct lock *);
+
 bool lock_do_i_hold(struct lock *);
+
 void lock_destroy(struct lock *);
+        struct wchan *lock_wchan;
+        struct spinlock lk_lock;
 
 
 /*
