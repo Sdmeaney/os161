@@ -82,12 +82,12 @@ struct lock {
 };
 
 struct lock *lock_create(const char *name);
-        struct wchan *lock_wchan;
-        struct spinlock lk_lock;
+       // struct wchan *lock_wchan;
+       // struct spinlock lk_lock;
 
 void lock_acquire(struct lock *);
-        struct wchan *lock_wchan;
-        struct spinlock lk_lock;
+       // struct wchan *lock_wchan;
+       // struct spinlock lk_lock;
 /*
  * Operations:
  *    lock_acquire - Get the lock. Only one thread can hold the lock at the
