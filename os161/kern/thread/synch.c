@@ -152,6 +152,8 @@ lock_create(const char *name)
 {
         struct lock *lock;
 
+
+
         lock = kmalloc(sizeof(struct lock));
         if (lock == NULL) {
                 return NULL;
@@ -166,9 +168,13 @@ lock_create(const char *name)
         // add stuff here as needed
         // taking from our semaphore example above but making it "lock"
 	//things to do:
-	//1. create our wait channel
-	//2. start our spinlock
-	//3. initialize our lock status to null
+	//1. initialize our lock status to nullc
+	//2. create our wait channel
+    //3. start our spinlock
+	//
+    //set currently locked status to null (since we just made it )
+    // this is a struct *thread
+    lock->lock_locked == NULL;
 	//wchan is wait channel
 	lock -> lk_wchan = wchan_create(lock -> lk_name);
 	//if it goes wrong, delete the evidence and return
@@ -180,9 +186,6 @@ lock_create(const char *name)
 	}
     //  spinlock_init(&sem->sem_lock);
     spinlock_init(&lock->lk_lock);
-
-    //set currently locked status to null (since we just made it )
-    lock->locked_locked == NULL;
 
 	//end custom
         return lock;
@@ -196,16 +199,14 @@ lock_destroy(struct lock *lock)
         // add stuff here as needed
 
     /* wchan_cleanup will assert if anyone's waiting on it */
-        //spinlock_cleanup(&sem->sem_lock);
-        //wchan_destroy(sem->sem_wchan);
-         //   kfree(sem->sem_name);
-         //   kfree(sem);
-
-    /* wchan_cleanup will assert if anyone's waiting on it */
         spinlock_cleanup(&lock->lk_lock);
         wchan_destroy(lock->lk_wchan);
-            kfree(lock->lk_name);
-            kfree(lock);
+            //kfree(lock->lk_name);
+            //kfree(lock);
+
+         //lock_locked is struct * thread    
+        lock->lock_locked = NULL;
+
         //end added stuff here
         
         kfree(lock->lk_name);
