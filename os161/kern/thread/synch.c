@@ -164,7 +164,22 @@ lock_create(const char *name)
         }
         
         // add stuff here as needed
-        
+        // taking from our semaphore example above but making it "lock"
+	//things to do:
+	//1. create our wait channel
+	//2. start our spinlock
+	//3. initialize our lock status to null
+	//wchan is wait channel
+	lock -> lk_wchan = wchan_create(lock -> lk_name);
+	//if it goes wrong, delete the evidence and return
+        if(lock -> lk_wchan == NULL)
+	{
+	  kfree(lock -> lk_name);
+  	  kfree(lock);
+	  return NULL;
+	}
+
+	//end added stuff 
         return lock;
 }
 

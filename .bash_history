@@ -1,13 +1,3 @@
-ls
-cd os161/
-ls
-./configure --ostree=$HOME/os161/root --toolprefix=sos-
-cd kern/conf/
-./config ASST0
-cd ../compile/ASST0
-pmake depend
-pmake
-pmake install
 write davros28 "hey"
 talk davros28 hey
 w
@@ -222,4 +212,289 @@ ls
 sys161 kernel -ASST0
 clear
 cd
+ls
+clear
+ls
+ls -al
+;s
+clear
+ls
+cd os161/
+ls
+cd build/
+ls
+cd ..
+ls
+./configure 
+cd ..
+ls
+cd os161/
+cd root
+ls
+sys161 kernel-ASST0
+fa
+sdf
+clear
+s
+sys161 kernel
+tree
+w
+clear
+w
+clear
+cd ..
+ls
+cd root
+clear
+ls
+cd ..
+ls
+find  --help
+find main.c
+clear
+ls
+find . main.c
+clear
+ls
+clear
+ls
+cd kern
+ls
+cd lib
+ls
+cd ..
+ls
+cd compile/
+ls
+cd ASST0/
+ls
+cd ..
+ls
+clear
+ls
+cd include/
+ls
+cd kern/
+ls
+cd ..
+ls
+cd ..
+sl
+ls
+find . main.c
+grep -r main.c
+ls
+cd kern/include
+ls
+pwd
+cd ..
+ls
+cd startup/
+ls
+nano main.c
+cd
+ls
+cd os161/
+ls
+pmake depend
+pmake
+pmake install
+ls
+cd kern/compile/
+l
+ls
+cd ASST0/
+pmake depend; pmake; pmake install
+pmake depend
+cd .
+cd
+ls
+cd cs350-os161/
+ls
+cd root/
+ls
+cd
+ls
+cd os161/
+ls
+cd
+ls
+cd cs350-os161/
+cd ..
+cd os161/
+ls
+cd kern/
+ls
+cd compile/
+ls
+cd ASST0/
+l
+sls
+ls
+cd
+ls
+nano build1
+ls
+./build1
+chmod +x build1 
+./build1 
+nano build1 
+nano run1
+chmod +x run1
+ls
+clear
+ls
+./build1
+clear
+ls
+cd cs350-os161/
+ls
+cd root
+ls
+cd uw-testbin/
+ls
+cat syscall 
+clear
+ls
+cd ..
+ls
+cd ..
+ls
+cd
+ls
+cd os161/
+ls
+cd root/
+ls
+cd ..
+ls
+cd
+ls
+git reset --hard HEAD
+ls
+git reset
+ls
+git reset --hard
+ls
+git reset --hard 0f3d5d1
+git
+git status
+clear
+ls
+rm -rf .
+rm -rf 
+ls
+pwd
+rm -rf ~/
+ls
+pwd
+ls
+clear
+git clone https://github.com/Sdmeaney/os161
+ls
+cd os161/
+ls
+cd ..
+ls
+rm -rf ~/
+ls
+git clone https://github.com/Sdmeaney/os161 .
+ls
+ls -la
+nano .bashrc
+ls
+nano build.sh
+chmod build.sh 
+chmod +x build.sh 
+nano run.sh
+ls
+cd os
+cd os161/
+l
+ls
+cd root
+ls
+cd ..
+ls
+cd 
+ls
+./.bashrc
+.bashrc
+ls
+./build.sh 
+ls
+chmod +x run.sh 
+./run.sh 
+cscope
+cscope .
+grep -r lock_create .
+ls
+cd os161/
+ls
+cd kern/
+ls
+lib
+ls
+cd lib
+ls
+nvim kprintf.c 
+vim kprintf.c 
+cd
+ls
+git commit
+git commit -a
+ls
+nano .gitignore
+clear
+ls -la
+cd .git
+ls
+cd
+ls
+ls -la
+git stage
+git stage .
+git commit
+ls
+git status
+git push remote
+git push
+ls
+clear
+ls
+cd os1
+cd os161/
+ls
+cd root/
+ls
+./kernel-ASST
+run
+runit
+clear
+cd
+ls
+nano .bashrc
+ls
+. .bashrc
+nano .bash
+nano .bashrc
+runit
+makeit
+clear
+nano .bashrc
+. .bashrc
+runit
+clear
+buildit
+ls
+clear
+cd os161/
+ls
+cd root
+ls
+cd include/
+ls
+cd ..
+ls
+cd ..
 ls
