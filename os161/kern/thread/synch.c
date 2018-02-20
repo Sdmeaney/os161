@@ -233,23 +233,24 @@ lock_acquire(struct lock *lock)
         //2 can't path to a sleep while holding the spinlock and freeze everything
         //3 1-to-1 for spinlock aq/rel
         //4 don't aquire same spinlock more than once
+       spinlock_acquire(&lock->lk_lock); //protect the compare for the if statement
 
        while(true){ //infinite loop it until we just break on spinlock release
-       spinlock_acquire(&lock->lk_lock); //protect the compare for the if statement
-       if(lock->lock_locked == NULL) //if it's empty
-       {
-        //lock our thread in        
-        lock->lock_locked = curthread; // god bless curthread
-        //releasing our spinlock section
-        spinlock_release(&lock->lk_lock);
-        break; //removed flag val for break
-       }
-       //so we don't have something not be null, then sleep with the spinlock
-       //this won't be touched by if null twice because it breaks71
-        spinlock_release(&lock->lk_lock);
+           if(lock->lock_locked == NULL) //if it's empty
+           {
+            //lock our thread in        
+            lock->lock_locked = curthread; // god bless curthread
+            //releasing our spinlock section
+            spinlock_release(&lock->lk_lock);
+            break; //removed flag val for break
+           }
+           wchan_lock(lock->lk_wchan);
+           //so we don't have something not be null, then sleep with the spinlock
+           //this won't be touched by if null twice because it breaks71
+            spinlock_release(&lock->lk_lock);
 
-        // it's not your turn so sleep
-        wchan_sleep(lock->lk_wchan);
+            // it's not your turn so sleep
+            wchan_sleep(lock->lk_wchan);
         }
 
         //end write this
