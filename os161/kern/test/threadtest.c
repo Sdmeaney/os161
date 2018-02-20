@@ -119,9 +119,9 @@ counterfun(void *junk, unsigned long num)
 
 	(void)junk;
 
-	lock_aquire();
+	lock_aquire(testlock);
 	globalcounter++;
-	lock_release();
+	lock_release(testlock);
 
 	V(tsem);
 }
