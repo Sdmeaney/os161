@@ -133,6 +133,7 @@ static
 void
 runthreads(int doloud)
 {
+	(void)doloud;
 	char name[16];
 	int i, result;
 
