@@ -218,6 +218,8 @@ void
 lock_acquire(struct lock *lock)
 {
     KASSERT(lock->lock_locked != curthread); //if the locked thread is also me
+     //well this is happening so FIXME
+
         // Write this
         //int release_flag;
 
