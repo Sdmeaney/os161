@@ -40,7 +40,7 @@
 
 int globalcounter = 0;
 int howmanytimes = 0;
-int numberof
+int numberof;
 
 static struct semaphore *tsem = NULL;
 
@@ -63,7 +63,7 @@ init_lk(void)
 	if (testlock==NULL) {
 		testlock = lock_create("testlock");
 		if (testlock == NULL) {
-			panic("threadtest: sem_create failed\n");
+			panic("threadtest: lock_create failed\n");
 		}
 	}
 }
