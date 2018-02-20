@@ -144,3 +144,17 @@ threadtest2(int nargs, char **args)
 
 	return 0;
 }
+
+int
+cus161(int nargs, char **args)
+{
+	(void)nargs;
+	(void)args;
+
+	init_sem();
+	kprintf("Starting thread test 2...\n");
+	runthreads(0);
+	kprintf("\nThread test 2 done.\n");
+
+	return 0;
+}

@@ -56,6 +56,8 @@ int queuetest(int, char **);
 int threadtest(int, char **);
 int threadtest2(int, char **);
 int threadtest3(int, char **);
+int cus161(int, char **);
+
 int semtest(int, char **);
 int locktest(int, char **);
 int cvtest(int, char **);
@@ -90,5 +92,5 @@ void menu(char *argstr);
 /* The main function, called from start.S. */
 void kmain(char *bootstring);
 
-void test(int, int);
+
 #endif /* _TEST_H_ */
