@@ -117,7 +117,7 @@ counterfun(void)
 {
 	int j;
     for(j=0; j<howmanytimes;j++){
-    	lock_aquire(testlock);
+    	lock_acquire(testlock);
 		globalcounter++;
 		lock_release(testlock);
     }
