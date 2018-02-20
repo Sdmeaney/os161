@@ -119,7 +119,7 @@ counterfun(void *data1, unsigned long data2)
 	(void)data1;
 	(void)data2;
 
-	if (locktype == l){
+	if (locktype == 'l'){
 		int j;
     	for(j=0; j<howmanytimes;j++){
     		lock_acquire(testlock);
@@ -127,7 +127,7 @@ counterfun(void *data1, unsigned long data2)
 			lock_release(testlock);
     	} 
 	}
-    else if (locktype == s){
+    else if (locktype == 's'){
 		int j;
     	for(j=0; j<howmanytimes;j++){
     		spinlock_acquire(testlock);
@@ -135,7 +135,7 @@ counterfun(void *data1, unsigned long data2)
 			spinlock_release(testlock);
 	    }
 	}
-    else (locktype == u){
+    else (locktype == 'u'){
 		int j;
     	for(j=0; j<howmanytimes;j++){
 			globalcounter++;
