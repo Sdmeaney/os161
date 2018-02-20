@@ -158,8 +158,8 @@ cus161(int nargs, char **args)
 
 	}
 	else{
-		threadnum = args[1];
-		howmanytimes = args[2];
+		threadnum = atoi(args[1]);
+		howmanytimes = atoi(args[2]);
 	}
 	init_sem();
 	kprintf("Starting thread test 2...\n");
