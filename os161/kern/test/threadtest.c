@@ -151,7 +151,7 @@ runthreads(int doloud)
 	}
 }
 
-static
+
 void
 runthreadstest(int doloud)
 {
