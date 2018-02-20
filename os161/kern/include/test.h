@@ -36,6 +36,7 @@
  */
 int globalcounter;
 int howmanytimes;
+char locktype;
 
 /* This is only actually available if OPT_SYNCHPROBS is set. */
 int whalemating(int, char **);
@@ -58,6 +59,7 @@ int threadtest(int, char **);
 int threadtest2(int, char **);
 int threadtest3(int, char **);
 int cus161(int, char **);
+
 void runthreadstest(int doloud);
 void counterfun(void *data1, unsigned long data2);
 void init_lk(void);

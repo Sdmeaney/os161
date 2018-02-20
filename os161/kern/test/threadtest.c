@@ -41,6 +41,7 @@
 int globalcounter = 0;
 int howmanytimes = 0;
 int numberof;
+char locktype;
 
 static struct semaphore *tsem = NULL;
 static struct lock *testlock = NULL;
@@ -118,16 +119,32 @@ counterfun(void *data1, unsigned long data2)
 	(void)data1;
 	(void)data2;
 
-	int j;
-    for(j=0; j<howmanytimes;j++){
-    	lock_acquire(testlock);
-		globalcounter++;
-		lock_release(testlock);
+	if (locktype == l){
+		int j;
+    	for(j=0; j<howmanytimes;j++){
+    		lock_acquire(testlock);
+			globalcounter++;
+			lock_release(testlock);
     }
+    if (locktype == u){
+		int j;
+    	for(j=0; j<howmanytimes;j++){
+			globalcounter++;
+    }
+    if (locktype == s){
+		int j;
+    	for(j=0; j<howmanytimes;j++){
+    		spinlock_acquire(testlock);
+			globalcounter++;
+			spinlock_release(testlock);
+    }
+
+	}
 
 
 	V(tsem);
 }
+
 
 static
 void
@@ -219,6 +236,7 @@ cus161(int nargs, char **args)
 	else{
 		threadnum = atoi(args[1]);
 		howmanytimes = atoi(args[2]);
+		locktype = args[3];
 	}
 	init_sem();
 	init_lk();
