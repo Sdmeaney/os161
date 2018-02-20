@@ -156,11 +156,11 @@ runthreads(int doloud)
 void
 runthreadstest(int doloud)
 {
-	(void)doloud;
+
 	char name[16];
 	int i, result;
 
-	for (i=0; i<NTHREADS; i++) {
+	for (i=0; i<doloud; i++) {
 		snprintf(name, sizeof(name), "threadtest%d", i);
 		result = thread_fork(name, NULL,
 				     counterfun,
@@ -171,7 +171,7 @@ runthreadstest(int doloud)
 		}
 	}
 
-	for (i=0; i<NTHREADS; i++) {
+	for (i=0; i<doloud; i++) {
 		P(tsem);
 	}
 }
