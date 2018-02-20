@@ -282,7 +282,7 @@ lock_do_i_hold(struct lock *lock)
         if(lock->lock_locked == curthread){ // if am the curthread return true
             return true;
         }
-        if (lock->lock_locked == curthread){ //if I'm not the cur thread ret false
+        else{ //if I'm not the cur thread ret false
             return false;
         }
 }
