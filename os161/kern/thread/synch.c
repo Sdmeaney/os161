@@ -217,7 +217,7 @@ lock_destroy(struct lock *lock)
 void
 lock_acquire(struct lock *lock)
 {
-    KASSERT(lock->lock_locked != curthread) //if the locked thread is also me
+    KASSERT(lock->lock_locked != curthread); //if the locked thread is also me
         // Write this
         //int release_flag;
 
