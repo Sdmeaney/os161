@@ -703,11 +703,6 @@ menu(char *args)
 {
 	char buf[64];
 
-	
-	kgets(buf, sizeof(buf));
-	test((buf), 2);
-
-
 	menu_execute(args, 1);
 
 	while (1) {
