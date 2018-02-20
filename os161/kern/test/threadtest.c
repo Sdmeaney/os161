@@ -148,12 +148,22 @@ threadtest2(int nargs, char **args)
 int
 cus161(int nargs, char **args)
 {
-	(void)nargs;
-	(void)args;
+	int threadnum;
+	int howmanytimes;
 
+	if (nargs < 2){
+	threadnum = 3;
+	howmanytimes = 10;
+	kprintf("Incorrect # of arguments, defaulting\n");
+
+	}
+	else{
+		threadnum = args[1];
+		howmanytimes = args[2];
+	}
 	init_sem();
 	kprintf("Starting thread test 2...\n");
-	runthreads(0);
+	runthreads(howmanytimes, threadnum);
 	kprintf("\nThread test 2 done.\n");
 
 	return 0;
