@@ -115,7 +115,7 @@ quietthread(void *junk, unsigned long num)
 void
 counterfun(void *data1, unsigned long data2)
 {
-	(void)*data1;
+	(void)data1;
 	(void)data2;
 
 	int j;
