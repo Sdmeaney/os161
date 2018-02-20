@@ -43,6 +43,8 @@ int howmanytimes = 0;
 int numberof;
 
 static struct semaphore *tsem = NULL;
+static struct semaphore *testlock = NULL;
+
 
 static
 void
