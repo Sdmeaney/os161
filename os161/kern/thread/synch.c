@@ -263,12 +263,10 @@ lock_release(struct lock *lock)
     KASSERT(lock != NULL);
     spinlock_acquire(&lock->lk_lock); //protect since we have to mess with 
 
-    wchan_wakeall(lock->lk_wchan); // let them all fight for the next slot
-
+    wchan_wakeone(lock->lk_wchan); // let them all fight for the next slot
     //lock->lock_locked = curthread; this is how we aquired
     // just like in aquire, we release 
     lock->lock_locked = NULL;
-
     spinlock_release(&lock->lk_lock); //end spinlock protect since we're done
        // (void)lock;  // suppress warning until code gets written
 }
