@@ -238,7 +238,7 @@ cus161(int nargs, char **args)
 	else{
 		threadnum = atoi(args[1]);
 		howmanytimes = atoi(args[2]);
-		locktype = (args[3]);
+		locktype = (args[3][0]);
 	}
 	init_sem();
 	init_lk();
