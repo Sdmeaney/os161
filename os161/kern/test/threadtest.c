@@ -55,12 +55,13 @@ init_sem(void)
 		}
 	}
 }
+
 static
 void
 init_lk(void)
 {
 	if (testlock==NULL) {
-		tsem = lock_create("testlock");
+		testlock = lock_create("testlock");
 		if (testlock == NULL) {
 			panic("threadtest: sem_create failed\n");
 		}
@@ -119,7 +120,7 @@ counterfun(void *junk, unsigned long num)
 	(void)junk;
 
 	lock_aquire();
-
+	globalcounter++;
 	lock_release();
 
 	V(tsem);
