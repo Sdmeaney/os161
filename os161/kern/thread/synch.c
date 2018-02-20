@@ -269,7 +269,7 @@ lock_release(struct lock *lock)
 
   //  if(lock_do_i_hold(lock)){ //give our lock to lock do I hold to see if it's curthread
         spinlock_acquire(&lock->lk_lock); //protect since we have to mess with 
-        wchan_wakeall(lock->lk_wchan); // let them all fight for the next slot
+        wchan_wakeone(lock->lk_wchan); // let them all fight for the next slot
         //lock->lock_locked = curthread; this is how we aquired
         // just like in aquire, we release 
         lock->lock_locked = NULL;
