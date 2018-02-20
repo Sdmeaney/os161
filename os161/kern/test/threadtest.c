@@ -242,6 +242,7 @@ cus161(int nargs, char **args)
 	}
 	init_sem();
 	init_lk();
+	spinlock_init();
 	kprintf("Starting thread test X thread numbers Y times...\n");
 	runthreadstest(threadnum);
 	kprintf("\nThread test done.\n");
