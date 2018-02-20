@@ -45,6 +45,7 @@ char locktype;
 
 static struct semaphore *tsem = NULL;
 static struct lock *testlock = NULL;
+static struct spinlock *spinlockt = NULL;
 
 
 static
@@ -130,9 +131,9 @@ counterfun(void *data1, unsigned long data2)
     else if (locktype == 's'){
 		int j;
     	for(j=0; j<howmanytimes;j++){
-    		spinlock_acquire(testlock);
+    		spinlock_acquire(spinlockt);
 			globalcounter++;
-			spinlock_release(testlock);
+			spinlock_release(spinlockt);
 	    }
 	}
     else (locktype == 'u'){
