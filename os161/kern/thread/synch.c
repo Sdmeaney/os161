@@ -180,7 +180,7 @@ lock_create(const char *name)
 	//if it goes wrong, delete the evidence and return
     if(lock -> lk_wchan == NULL)
 	{
-	  kfree(lock -> lk_name);
+	  //kfree(lock -> lk_name);
   	  kfree(lock);
 	  return NULL;
 	}
@@ -206,7 +206,7 @@ lock_destroy(struct lock *lock)
             //kfree(lock);
 
          //lock_locked is struct * thread    
-        lock->lock_locked = NULL;
+        //lock->lock_locked = NULL; //who cares I'm killing it
 
         //end added stuff here
         
@@ -217,6 +217,7 @@ lock_destroy(struct lock *lock)
 void
 lock_acquire(struct lock *lock)
 {
+    KASSERT(lock->lock_locked != curthread) //if the locked thread is also me
         // Write this
         //int release_flag;
 
