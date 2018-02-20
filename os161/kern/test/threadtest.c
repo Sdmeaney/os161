@@ -222,9 +222,9 @@ cus161(int nargs, char **args)
 	}
 	init_sem();
 	init_lk();
-	kprintf("Starting thread test 2...\n");
+	kprintf("Starting thread test X thread numbers Y times...\n");
 	runthreadstest(threadnum);
-	kprintf("\nThread test 2 done.\n");
+	kprintf("\nThread test done.\n");
 
 	return 0;
 }
