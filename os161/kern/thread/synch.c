@@ -260,7 +260,7 @@ lock_release(struct lock *lock)
         // Write this
         //lock_release - Free the lock. Only the thread holding the lock may do
         //  this.
-    KASSERT(lock->lock_locked == curthread);
+ //   KASSERT(lock->lock_locked == curthread);
     KASSERT(lock != NULL);
 
   //  if(lock_do_i_hold(lock)){ //give our lock to lock do I hold to see if it's curthread
