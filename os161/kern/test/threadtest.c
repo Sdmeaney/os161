@@ -112,7 +112,6 @@ quietthread(void *junk, unsigned long num)
 	V(tsem);
 }
 
-static
 void
 counterfun()
 {
