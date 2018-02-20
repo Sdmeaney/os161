@@ -56,7 +56,7 @@ init_sem(void)
 	}
 }
 
-static
+
 void
 init_lk(void)
 {
