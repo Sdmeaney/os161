@@ -114,10 +114,9 @@ quietthread(void *junk, unsigned long num)
 
 static
 void
-counterfun(void *junk, unsigned long num)
+counterfun()
 {
 	int j;
-	(void)junk;
     for(j=0; j<howmanytimes;j++){
     	lock_aquire(testlock);
 		globalcounter++;
