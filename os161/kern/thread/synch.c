@@ -239,7 +239,7 @@ lock_acquire(struct lock *lock)
         lock->lock_locked = curthread; // god bless curthread
         //releasing our spinlock section
         spinlock_release(&lock->lk_lock);
-        break;
+        break; //removed flag val for break
        }
        //so we don't have something not be null, then sleep with the spinlock
        //this won't be touched by if null twice because it breaks71
@@ -258,7 +258,18 @@ void
 lock_release(struct lock *lock)
 {
         // Write this
+        //lock_release - Free the lock. Only the thread holding the lock may do
+        //  this.
+    KASSERT(sem != NULL);
+    spinlock_acquire(&lock->lk_lock); //protect since we have to mess with 
 
+    wchan_wakeall(lock->lk_wchan); // let them all fight for the next slot
+
+    //lock->lock_locked = curthread; this is how we aquired
+    // just like in aquire, we release 
+    lock->lock_locked = NULL;
+
+    spinlock_release(&lock->lk_lock); //end spinlock protect since we're done
         (void)lock;  // suppress warning until code gets written
 }
 
@@ -268,8 +279,12 @@ lock_do_i_hold(struct lock *lock)
         // Write this
 
         (void)lock;  // suppress warning until code gets written
-
-        return true; // dummy until code gets written
+        if(lock->lock_locked == curthread){ // if am the curthread return true
+            return true;
+        }
+        if (lock->lock_locked == curthread){ //if I'm not the cur thread ret false
+            return false;
+        }
 }
 
 ////////////////////////////////////////////////////////////
