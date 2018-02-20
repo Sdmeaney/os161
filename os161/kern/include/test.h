@@ -34,7 +34,8 @@
  * Declarations for test code and other miscellaneous high-level
  * functions.
  */
-
+int globalcounter;
+int howmanytimes;
 
 /* This is only actually available if OPT_SYNCHPROBS is set. */
 int whalemating(int, char **);
@@ -57,6 +58,10 @@ int threadtest(int, char **);
 int threadtest2(int, char **);
 int threadtest3(int, char **);
 int cus161(int, char **);
+void runthreadstest(int doloud);
+counterfun(void *junk, unsigned long num);
+void init_lk(void);
+
 
 int semtest(int, char **);
 int locktest(int, char **);

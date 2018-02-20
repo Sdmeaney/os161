@@ -38,6 +38,10 @@
 
 #define NTHREADS  8
 
+int globalcounter = 0;
+int howmanytimes = 0;
+int numberof
+
 static struct semaphore *tsem = NULL;
 
 static
@@ -51,6 +55,18 @@ init_sem(void)
 		}
 	}
 }
+static
+void
+init_lk(void)
+{
+	if (testlock==NULL) {
+		tsem = lock_create("testlock");
+		if (testlock == NULL) {
+			panic("threadtest: sem_create failed\n");
+		}
+	}
+}
+
 
 static
 void
@@ -95,6 +111,22 @@ quietthread(void *junk, unsigned long num)
 
 static
 void
+counterfun(void *junk, unsigned long num)
+{
+	int ch = '0' + num;
+	volatile int i;
+
+	(void)junk;
+
+	lock_aquire();
+
+	lock_release();
+
+	V(tsem);
+}
+
+static
+void
 runthreads(int doloud)
 {
 	char name[16];
@@ -116,6 +148,28 @@ runthreads(int doloud)
 	}
 }
 
+static
+void
+runthreadstest(int doloud)
+{
+	char name[16];
+	int i, result;
+
+	for (i=0; i<NTHREADS; i++) {
+		snprintf(name, sizeof(name), "threadtest%d", i);
+		result = thread_fork(name, NULL,
+				     counterfun(),
+				     NULL, i);
+		if (result) {
+			panic("threadtest: thread_fork failed %s)\n", 
+			      strerror(result));
+		}
+	}
+
+	for (i=0; i<NTHREADS; i++) {
+		P(tsem);
+	}
+}
 
 int
 threadtest(int nargs, char **args)
@@ -149,7 +203,7 @@ int
 cus161(int nargs, char **args)
 {
 	int threadnum;
-	int howmanytimes;
+	//int howmanytimes;
 
 	if (nargs < 2){
 	threadnum = 3;
@@ -162,8 +216,9 @@ cus161(int nargs, char **args)
 		howmanytimes = atoi(args[2]);
 	}
 	init_sem();
+	init_lk();
 	kprintf("Starting thread test 2...\n");
-	runthreads(howmanytimes, threadnum);
+	runthreadstest(threadnum);
 	kprintf("\nThread test 2 done.\n");
 
 	return 0;
