@@ -273,7 +273,7 @@ lock_release(struct lock *lock)
         //lock->lock_locked = curthread; this is how we aquired
         // just like in aquire, we release 
         lock->lock_locked = NULL;
-        KASSERT(lock == NULL);
+        KASSERT(lock_locked == NULL);
 
         spinlock_release(&lock->lk_lock); //end spinlock protect since we're done
            // (void)lock;  // suppress warning until code gets written
