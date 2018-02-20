@@ -136,7 +136,7 @@ counterfun(void *data1, unsigned long data2)
 			spinlock_release(spinlockt);
 	    }
 	}
-    else (locktype == 'u'){
+    else{
 		int j;
     	for(j=0; j<howmanytimes;j++){
 			globalcounter++;
