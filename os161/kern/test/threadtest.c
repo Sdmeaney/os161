@@ -242,7 +242,7 @@ cus161(int nargs, char **args)
 	}
 	init_sem();
 	init_lk();
-	kmalloc(sizeof(struct spinlock));
+	spinlockt = kmalloc(sizeof(struct spinlock));
 	spinlock_init(spinlockt);
 	kprintf("Starting thread test X thread numbers Y times...\n");
 	runthreadstest(threadnum);
