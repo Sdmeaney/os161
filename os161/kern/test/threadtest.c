@@ -113,7 +113,7 @@ quietthread(void *junk, unsigned long num)
 }
 
 void
-counterfun()
+counterfun(void)
 {
 	int j;
     for(j=0; j<howmanytimes;j++){
@@ -159,7 +159,7 @@ runthreadstest(int doloud)
 	for (i=0; i<NTHREADS; i++) {
 		snprintf(name, sizeof(name), "threadtest%d", i);
 		result = thread_fork(name, NULL,
-				     counterfun(),
+				     counterfun,
 				     NULL, i);
 		if (result) {
 			panic("threadtest: thread_fork failed %s)\n", 
