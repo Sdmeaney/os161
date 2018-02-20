@@ -225,6 +225,8 @@ cus161(int nargs, char **args)
 	kprintf("Starting thread test X thread numbers Y times...\n");
 	runthreadstest(threadnum);
 	kprintf("\nThread test done.\n");
+	kprintf("%d \n", (howmanytimes*threadnum));
+	kprintf("%d \n", (globalcounter));
 
 	return 0;
 }
