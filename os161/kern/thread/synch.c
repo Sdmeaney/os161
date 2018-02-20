@@ -260,7 +260,7 @@ lock_release(struct lock *lock)
         // Write this
         //lock_release - Free the lock. Only the thread holding the lock may do
         //  this.
-    KASSERT(sem != NULL);
+    KASSERT(lock != NULL);
     spinlock_acquire(&lock->lk_lock); //protect since we have to mess with 
 
     wchan_wakeall(lock->lk_wchan); // let them all fight for the next slot
