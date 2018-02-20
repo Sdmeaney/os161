@@ -118,7 +118,7 @@ counterfun(void *junk, unsigned long num)
 {
 	int j;
 	(void)junk;
-    for(j=0; i<howmanytimes;j++){
+    for(j=0; j<howmanytimes;j++){
     	lock_aquire(testlock);
 		globalcounter++;
 		lock_release(testlock);
