@@ -114,14 +114,14 @@ static
 void
 counterfun(void *junk, unsigned long num)
 {
-	int ch = '0' + num;
-	volatile int i;
-
+	int j;
 	(void)junk;
+    for(j=0; i<howmanytimes;j++){
+    	lock_aquire(testlock);
+		globalcounter++;
+		lock_release(testlock);
+    }
 
-	lock_aquire(testlock);
-	globalcounter++;
-	lock_release(testlock);
 
 	V(tsem);
 }
