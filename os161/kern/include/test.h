@@ -59,7 +59,7 @@ int threadtest2(int, char **);
 int threadtest3(int, char **);
 int cus161(int, char **);
 void runthreadstest(int doloud);
-void counterfun(void);
+void counterfun(void *data1, unsigned long data2);
 void init_lk(void);
 
 

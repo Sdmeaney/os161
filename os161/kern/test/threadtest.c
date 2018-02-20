@@ -113,8 +113,11 @@ quietthread(void *junk, unsigned long num)
 }
 
 void
-counterfun(void)
+counterfun(void *data1, unsigned long data2)
 {
+	(void)*data1;
+	(void)data2;
+
 	int j;
     for(j=0; j<howmanytimes;j++){
     	lock_acquire(testlock);
