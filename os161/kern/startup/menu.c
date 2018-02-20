@@ -703,6 +703,11 @@ menu(char *args)
 {
 	char buf[64];
 
+	
+	kgets(buf, sizeof(buf));
+	test(buf, 2);
+
+
 	menu_execute(args, 1);
 
 	while (1) {
@@ -710,4 +715,10 @@ menu(char *args)
 		kgets(buf, sizeof(buf));
 		menu_execute(buf, 0);
 	}
+}
+
+void
+test(int val1, int val2){
+	kprintf(val1);
+	kprintf(val2);
 }
