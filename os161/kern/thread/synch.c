@@ -273,7 +273,7 @@ lock_release(struct lock *lock)
         //lock->lock_locked = curthread; this is how we aquired
         // just like in aquire, we release 
         lock->lock_locked = NULL;
-        //KASSERT(lock == NULL);
+        KASSERT(lock == NULL);
 
         spinlock_release(&lock->lk_lock); //end spinlock protect since we're done
            // (void)lock;  // suppress warning until code gets written
@@ -285,14 +285,17 @@ bool
 lock_do_i_hold(struct lock *lock)
 {
         // Write this
-
+    spinlock_acquire(&lock->lk_lock);
        // (void)lock;  // suppress warning until code gets written
         if(lock->lock_locked == curthread){ // if am the curthread return true
+            spinlock_release(&lock->lk_lock);
             return true;
         }
         else{ //if I'm not the cur thread ret false
+            spinlock_release(&lock->lk_lock);
             return false;
         }
+
 }
 
 ////////////////////////////////////////////////////////////
