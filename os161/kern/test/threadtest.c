@@ -249,6 +249,6 @@ cus161(int nargs, char **args)
 	kprintf("\nThread test done.\n");
 	kprintf("%d \n", (howmanytimes*threadnum));
 	kprintf("%d \n", (globalcounter));
-
+	globalcounter = 0;
 	return 0;
 }
