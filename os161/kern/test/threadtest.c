@@ -227,6 +227,7 @@ int
 cus161(int nargs, char **args)
 {
 	int threadnum;
+	globalcounter = 0;
 	//int howmanytimes;
 
 	if (nargs < 2){
@@ -249,6 +250,6 @@ cus161(int nargs, char **args)
 	kprintf("\nThread test done.\n");
 	kprintf("%d \n", (howmanytimes*threadnum));
 	kprintf("%d \n", (globalcounter));
-	globalcounter = 0;
+
 	return 0;
 }
