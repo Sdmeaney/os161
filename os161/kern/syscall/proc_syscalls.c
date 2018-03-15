@@ -61,6 +61,7 @@ sys_fork(pid_t *retval)
 
 void testuser_thread(void* temp_tf, unsigned long l){
   void(l);
+  kfee(temp_tf);
 }
 
 
