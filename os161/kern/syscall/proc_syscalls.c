@@ -9,12 +9,13 @@
 #include <thread.h>
 #include <addrspace.h>
 #include <copyinout.h>
+#include <mips/trapframe.h>
 
   /* this implementation of sys__exit does not do anything with the exit code */
   /* this needs to be fixed to get exit() and waitpid() working properly */
 
 void sys__exit(int exitcode) {
-
+  kprintf("sysexit running\n");
   struct addrspace *as;
   struct proc *p = curproc;
   /* for now, just include this to keep the compiler from complaining about
@@ -61,7 +62,9 @@ sys_fork(pid_t *retval)
 
 void testuser_thread(void* temp_tf, unsigned long testvar){
   void(testvar);
-  kfee(temp_tf);
+  void(temp_tf);
+  kprintf("**SCREAMING CHILD NOISES**");
+  thread_exit();
 }
 
 
