@@ -58,6 +58,8 @@ struct proc {
 
 	/* VFS */
 	struct vnode *p_cwd;		/* current working directory */
+	/* pid */
+	pid_t p_pid;
 
 #ifdef UW
   /* a vnode to refer to the console device */
