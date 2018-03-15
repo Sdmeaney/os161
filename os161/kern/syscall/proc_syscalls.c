@@ -61,8 +61,8 @@ sys_fork(pid_t *retval)
 }
 
 void uproc_thread(void* temp_tf, unsigned long testvar){
-  void(testvar);
-  void(temp_tf);
+  (void)testvar;
+  (void)temp_tf;
   kprintf("**SCREAMING CHILD NOISES**");
   thread_exit();
 }
