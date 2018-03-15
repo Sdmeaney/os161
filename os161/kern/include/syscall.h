@@ -64,7 +64,7 @@ void sys__exit(int exitcode);
 int sys_getpid(pid_t *retval);
 int sys_waitpid(pid_t pid, userptr_t status, int options, pid_t *retval);
 int sys_fork(pid_t *retval); //fork add
-void testuser_thread(void* temp_tf, unsigned long l);
+void testuser_thread(void* temp_tf, unsigned long testvar);
 
 #endif // UW
 

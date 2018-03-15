@@ -59,8 +59,8 @@ sys_fork(pid_t *retval)
   return 0; //test
 }
 
-void testuser_thread(void* temp_tf, unsigned long l){
-  void(l);
+void testuser_thread(void* temp_tf, unsigned long testvar){
+  void(testvar);
   kfee(temp_tf);
 }
 
