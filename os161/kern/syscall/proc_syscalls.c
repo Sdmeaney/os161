@@ -56,7 +56,7 @@ void sys__exit(int exitcode) {
 int
 sys_fork(pid_t *retval)
 {
-  *retval = 2; //test
+  *retval = 1; //test
   return 0; //test
 }
 
