@@ -61,7 +61,7 @@ sys_fork(pid_t *retval , struct trapframe *passed_tf)
   //follow sys_exit example
   struct proc *c_p;
     kprintf("Starting child proc\n");
-  struct addrspace *child_as;
+  struct addrspace *child_as = NULL;
     kprintf("Setting up addrspace\n");
   c_p = proc_create_runprogram("newnastychild"); //god bless griffin for this
   
