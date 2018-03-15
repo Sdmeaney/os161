@@ -86,7 +86,7 @@ sys_fork(pid_t *retval , struct trapframe *passed_tf)
     //kprintf("Parent returning after thread fork\n");
    // stall until I implement wait-pid
 
-  *retval = 1; //test
+  *retval = (c_p->p_pid);
   //kprintf("Parent finally leaving sys_fork\n");
   return 0; //test
 }
@@ -114,7 +114,7 @@ sys_getpid(pid_t *retval)
   /* for now, this is just a stub that always returns a PID of 1 */
   /* you need to fix this to make it work properly */
   *retval = (curproc->p_pid);
-  
+
   return(0);
 }
 
