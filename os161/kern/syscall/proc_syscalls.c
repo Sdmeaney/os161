@@ -54,8 +54,33 @@ void sys__exit(int exitcode) {
 //fork
 
 int
-sys_fork(pid_t *retval)
+sys_fork(pid_t *retval , struct trapframe *passed_tf)
 {
+  kprintf("sys_fork running\n");
+
+  //follow sys_exit example
+  struct proc *c_p;
+    kprintf("Starting child proc\n");
+  struct addrspace *child_as;
+    kprintf("Setting up addrspace\n");
+  c_p = proc_create_fork("newnastychild"); //give it a name
+  
+  // COPY SECTION
+    // copy our address space
+    KASSERT(child_as ==NULL); //This should be null, if it's not = bad things
+    as_copy(curproc->p_addrspace, &child_as); // copy it over from curproc
+  // make a copy of the trap frame variables
+    struct trapframe* ctf; // how can you not use ctf as the name
+    kmalloc(sizeof(struct trapframe)); //malloc our trapframe
+    *ctf = *passed_tf; // assign our passed trap frame
+  // END COPY SECTION
+
+
+  //memory edit our trap frame
+    int x;
+    x = thread_fork(curthread->t_name, c_p,uproc_thread, *retval,ctf);
+
+
   *retval = 1; //test
   return 0; //test
 }
