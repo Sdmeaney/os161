@@ -54,15 +54,16 @@ void sys__exit(int exitcode) {
 //fork
 
 int
-sys_fork(pid_t *retval)
+sys_fork(struct trapfr *tf, pid_t *retval)
 {
   *retval = 1; //test
   return 0; //test
 }
 
-void uproc_thread(void* temp_tf, unsigned long testvar){
+void 
+uproc_thread(void* temp_tf, unsigned long testvar){
   (void)testvar;
-  (void)temp_tf;
+  kfree(temp_tf);
   kprintf("**SCREAMING CHILD NOISES**");
   thread_exit();
 }
