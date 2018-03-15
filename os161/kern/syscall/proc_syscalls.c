@@ -96,8 +96,8 @@ uproc_thread(void* temp_tf, unsigned long testvar){
   // +4 to move past syscall
   cur_trapframe.tf_v0 = 0; 
   cur_trapframe.tf_epc += 4;
-  mips_usermode(&cur_trapframe);
   kprintf("**SCREAMING CHILD NOISES**");
+  mips_usermode(&cur_trapframe);
   thread_exit();
 }
 
