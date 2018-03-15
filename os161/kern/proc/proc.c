@@ -55,7 +55,7 @@
  * The process for the kernel; this holds all the kernel-only threads.
  */
 struct proc *kproc;
-
+pid_t prosid = 2;
 /*
  * Mechanism for making the kernel menu thread sleep while processes are running
  */
@@ -98,6 +98,10 @@ proc_create(const char *name)
 
 	/* VFS fields */
 	proc->p_cwd = NULL;
+
+	/* PID field */
+	proc->p_pid = prosid;
+	prosid += 1
 
 #ifdef UW
 	proc->console = NULL;

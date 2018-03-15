@@ -64,7 +64,8 @@ sys_fork(pid_t *retval , struct trapframe *passed_tf)
     //kprintf("Starting child proc\n");
   struct addrspace *child_as = NULL;
     //kprintf("Setting up addrspace\n");
-  c_p = proc_create_runprogram("newnastychild"); //god bless griffin for this
+  c_p = proc_create_runprogram("newnastychild"); //god bless griffin for telling me proc_create_program exists
+
   
   // COPY SECTION
     // copy our address space
@@ -99,7 +100,7 @@ uproc_thread(void* temp_tf, unsigned long testvar){
   // +4 to move past syscall
   cur_trapframe.tf_v0 = 0; 
   cur_trapframe.tf_epc += 4;
-  //kprintf("**SCREAMING CHILD NOISES**");
+  //kprintf("**SCREAMING CHILD NOISES**"); //my annoying child is running
   mips_usermode(&cur_trapframe);
   thread_exit();
 }
@@ -112,7 +113,8 @@ sys_getpid(pid_t *retval)
 {
   /* for now, this is just a stub that always returns a PID of 1 */
   /* you need to fix this to make it work properly */
-  *retval = 1;
+  *retval = (curproc->p_pid);
+  
   return(0);
 }
 
