@@ -80,9 +80,6 @@ sys_fork(pid_t *retval , struct trapframe *passed_tf)
     int x;
     int nowarningretval = *retval;
     x = thread_fork(curthread->t_name, c_p,uproc_thread, nowarningretval,ctf);
-    if (err) {
-      return err;
-    }
     kprintf("Parent returning after thread fork\n");
 
   *retval = 1; //test
