@@ -63,7 +63,13 @@ sys_fork(pid_t *retval)
 void 
 uproc_thread(void* temp_tf, unsigned long testvar){
   (void)testvar;
+  struct trapframe cur_trapframe = *((struct trapframe*)temp_tf); 
   kfree(temp_tf);
+  //child = 0
+  // +4 to move past syscall
+  cur_trapframe.tf_v0 = 0; 
+  cur_trapframe.tf_epc += 4;
+  mips_usermode(&cur_trapframe);
   kprintf("**SCREAMING CHILD NOISES**");
   thread_exit();
 }
