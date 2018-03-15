@@ -60,7 +60,7 @@ sys_fork(pid_t *retval)
   return 0; //test
 }
 
-void testuser_thread(void* temp_tf, unsigned long testvar){
+void uproc_thread(void* temp_tf, unsigned long testvar){
   void(testvar);
   void(temp_tf);
   kprintf("**SCREAMING CHILD NOISES**");
