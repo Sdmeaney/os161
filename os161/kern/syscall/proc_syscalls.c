@@ -84,18 +84,7 @@ sys_fork(pid_t *retval , struct trapframe *passed_tf)
     x = thread_fork(curthread->t_name, c_p,uproc_thread,ctf, *retval);
     //kprintf("Parent returning after thread fork\n");
    // stall until I implement wait-pid
-    int b;
-    for( a = 1; a < 20000; a = a + 1 ){
-      b = a + a;
-      b = a + a;
-      //wasting time
-    }
-    for( a = 1; a < 20000; a = a + 1 ){
-      b = a + a;
-      b = a + a;
 
-      //wasting time
-    }
   *retval = 1; //test
   //kprintf("Parent finally leaving sys_fork\n");
   return 0; //test
