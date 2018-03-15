@@ -63,7 +63,7 @@ sys_fork(pid_t *retval , struct trapframe *passed_tf)
     kprintf("Starting child proc\n");
   struct addrspace *child_as;
     kprintf("Setting up addrspace\n");
-  c_p = proc_create_fork("newnastychild"); //give it a name
+  c_p = proc_create_runprogram("newnastychild"); //god bless griffin for this
   
   // COPY SECTION
     // copy our address space
