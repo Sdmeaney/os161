@@ -11,11 +11,12 @@
 #include <copyinout.h>
 #include <mips/trapframe.h>
 
+
   /* this implementation of sys__exit does not do anything with the exit code */
   /* this needs to be fixed to get exit() and waitpid() working properly */
 
 void sys__exit(int exitcode) {
-  kprintf("sysexit running\n");
+  //kprintf("sysexit running\n");
   struct addrspace *as;
   struct proc *p = curproc;
   /* for now, just include this to keep the compiler from complaining about
@@ -82,7 +83,12 @@ sys_fork(pid_t *retval , struct trapframe *passed_tf)
     // threadfork(name, function poitner entry point for new, pass1 pass2)
     x = thread_fork(curthread->t_name, c_p,uproc_thread,ctf, *retval);
     //kprintf("Parent returning after thread fork\n");
-
+   // stall until I implement wait-pid
+    int b;
+    for( a = 1; a < 2000; a = a + 1 ){
+      b = a + a;
+      //wasting time
+    }
   *retval = 1; //test
   //kprintf("Parent finally leaving sys_fork\n");
   return 0; //test
