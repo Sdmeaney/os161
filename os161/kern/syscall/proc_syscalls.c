@@ -69,6 +69,7 @@ sys_fork(pid_t *retval , struct trapframe *passed_tf)
     // copy our address space
     KASSERT(child_as ==NULL); //This should be null, if it's not = bad things
     as_copy(curproc->p_addrspace, &child_as); // copy it over from curproc
+    (c_p->p_addrspace);
   // make a copy of the trap frame variables
     struct trapframe* ctf; // how can you not use ctf as the name
     ctf = kmalloc(sizeof(struct trapframe)); //malloc our trapframe
