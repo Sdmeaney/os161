@@ -56,13 +56,13 @@ void sys__exit(int exitcode) {
 int
 sys_fork(pid_t *retval , struct trapframe *passed_tf)
 {
-  kprintf("sys_fork running\n");
+  //kprintf("sys_fork running\n");
 
   //follow sys_exit example
   struct proc *c_p;
-    kprintf("Starting child proc\n");
+    //kprintf("Starting child proc\n");
   struct addrspace *child_as = NULL;
-    kprintf("Setting up addrspace\n");
+    //kprintf("Setting up addrspace\n");
   c_p = proc_create_runprogram("newnastychild"); //god bless griffin for this
   
   // COPY SECTION
@@ -81,10 +81,10 @@ sys_fork(pid_t *retval , struct trapframe *passed_tf)
     int x;
     // threadfork(name, function poitner entry point for new, pass1 pass2)
     x = thread_fork(curthread->t_name, c_p,uproc_thread,ctf, *retval);
-    kprintf("Parent returning after thread fork\n");
+    //kprintf("Parent returning after thread fork\n");
 
   *retval = 1; //test
-  kprintf("Parent finally leaving sys_fork\n");
+  //kprintf("Parent finally leaving sys_fork\n");
   return 0; //test
 }
 
@@ -97,7 +97,7 @@ uproc_thread(void* temp_tf, unsigned long testvar){
   // +4 to move past syscall
   cur_trapframe.tf_v0 = 0; 
   cur_trapframe.tf_epc += 4;
-  kprintf("**SCREAMING CHILD NOISES**");
+  //kprintf("**SCREAMING CHILD NOISES**");
   mips_usermode(&cur_trapframe);
   thread_exit();
 }
