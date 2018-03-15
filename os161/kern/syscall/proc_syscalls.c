@@ -48,12 +48,23 @@ void sys__exit(int exitcode) {
   panic("return from thread_exit in sys_exit\n");
 }
 
+
+
+//fork
+
 int
 sys_fork(pid_t, *retval)
 {
   *retval = 2; //test
   return 0; //test
 }
+
+void testuser_thread(void* temp_tf, unsigned long l){
+  void(l)
+}
+
+
+
 /* stub handler for getpid() system call                */
 int
 sys_getpid(pid_t *retval)
