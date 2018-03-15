@@ -101,7 +101,7 @@ proc_create(const char *name)
 
 	/* PID field */
 	proc->p_pid = prosid;
-	prosid += 1
+	prosid += 1;
 
 #ifdef UW
 	proc->console = NULL;
