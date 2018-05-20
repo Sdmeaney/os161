@@ -92,6 +92,7 @@ void proctable_add(struct proc* p){
 	//ADD IT
 	}
 		p->p_pid = i;
+		p->parent_pid = curproc;
 		proctable[i] = p;
 		return;
 	}

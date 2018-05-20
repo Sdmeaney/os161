@@ -60,6 +60,7 @@ struct proc {
 	struct vnode *p_cwd;		/* current working directory */
 	/* pid */
 	pid_t p_pid;
+	pid_t parent_pid;
 
 #ifdef UW
   /* a vnode to refer to the console device */
