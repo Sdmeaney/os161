@@ -74,8 +74,9 @@ static struct semaphore *proc_count_mutex;
 struct semaphore *no_proc_sem;   
 #endif  // UW
 
-proctable_create(){
+void proctable_create(void){
  proctable = kmalloc (sizeof(struct proc *)*256);
+
 {
 	
 };
