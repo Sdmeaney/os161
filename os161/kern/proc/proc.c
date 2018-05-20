@@ -58,7 +58,7 @@ struct proc *kproc;
 pid_t prosid = 2;
 
 // defining proccess table
-static struct proc ** proctable; // ** pointer to a pointer
+// static struct proc ** proctable; // ** pointer to a pointer
 								 // static is so it's not dynamically allocated and so we can reference
 
 /*
