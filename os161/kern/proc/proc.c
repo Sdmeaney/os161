@@ -91,11 +91,15 @@ void proctable_add(struct proc* p){
 	if (proctable[i] == NULL){
 	//ADD IT
 	}
-	p = p;
+		p->p_pid = i;
+		proctable[i] = p;
+		return;
 	}
 
 	// WE'VE LOOPED, NO NULLS
-
+	proctable_resize();
+	proctable_add(p);
+	return;
 }
 
 void proctable_resize(void){
