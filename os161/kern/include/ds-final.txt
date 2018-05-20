@@ -1,0 +1,125 @@
+1 m x
+2 m x
+3 m
+4 e
+5 e
+6 MH
+7 M
+8 E
+9 M
+10 M
+
+
+1. prove balanced tree forms empty leftist heap
+In class we said that we could prove that the right path in a leftist tree is as short as any in the tree
+the proof was by contradiction
+
+   ^     +-+            ^
+   |     |x|            |
+   |   +-----+          |
+   |   V     V          |
+D1 |  +-+   +-+         | D2
+   |  |L|   |R|         |
+   |  +-+   +-+         |
+   |  +         +       |
+   |  +           +     |
+   | ++-+         +--+  |
+   | |  |         |  |  |
+   v +--+         +--+  v
+
+Pick a shorter path D1 < D2, and find what node they diverge from (x)
+the node path length of L will be <= D1 - 1 "because of the path of length D1-1 to null"
+this same thing works with the right side, where if we assume that it's longer (a requirement for an unbalanced tree) we find that every node on the right path is leftist, and that violates the leftist property of X. So the tree must be balanced if we follow the rules of building a leftist heap using a leftist tree. 
+
+2. prove same but empty skew heap
+	This one is kind of similar to the above, as they're close to the same data structure.
+	skew heaps will always switch children when fixing the right path, which doesn't cause issues with balance, as well as the blind adjustment since we are starting with an empty skew heap from the start.
+
+3. binomial queue 
+  a) modifiy merge to terminate merging if there are no trees in h2 and the carry tree is null
+  b) modify the merge so that the smaller tree is always merged into larger
+  c) what impact does this have
+
+4. quicksort
+private static void sort(Comparable[] a, int lo, int hi)
+ {
+ if (hi <= lo) return;
+ int j = partition(a, lo, hi);
+ sort(a, lo, j-1);
+ sort(a, j+1, hi);
+ } 
+
+k,g,i,k,n,v,s,s,w,q
+(for ease of comparisons, converting to numeric)
+107 103 105 107 110 118 115 115 119 113 
+
+107   103 105 107 110 118 115 115 119 113 
+       i                               j
+
+
+5. minheap w/inputs
+	a) after all inserted
+	b) at least the first 4 iterations
+	c) don't need to draw trees, just show array
+
+6. 
+	a) prove any comparison-based algo to sort 4 elements requires 5 comparisons
+	b) give an algorithm to sort 4 elements in 5 comparisons
+
+7. quicksort problems
+
+8. matrix 2d array
+Suppose we have a NxN matrix where the entries in each row are in increasing order (left to right) and the entries in each column are in increasing order (top to bottom)
+using a three way comparison give an algorithm to determine if x is in the matrix in 2N -1 comparisons
+creating an example NxN array that follows the rules of increasing order
+
+[0 1 2 3 4 5]
+[1 2 34  5 6]
+[2 3 4 5 6 7]
+[3 4 5 6 7 8]
+[4 5 6 7 8 9]
+
+Summary
+start at 0,0 and do a 3 way compare with cell below, cell to right
+	if cell to left or below is = x return true
+	if cell below is < x, save index value for later
+	if cell to left > x we have finished our horizontal for this row, jump to our saved indexes
+		if we don't have
+
+1 2 3 4
+2 3 4 7
+4 6 4 6	
+
+if cell to 
+
+start at 0,0
+create a stack of indexes to do a 3 way compare, and put 0,0 on it
+
+a[x,x] = current
+a[x+1,x] = vertical
+a[x,x+1] = horizontal
+
+if horizontal | vertical == value
+	return true;
+if horizontal < value
+	put horizontal index on stack
+if vertical < value
+	put vertical index on stack
+// end old work v2
+
+ I've created a few of implementations 
+ 	* (creating a frontier of values and searching it)
+ 	* having two sliding index points that move horizontal or vertical based on comparisons
+    but I haven't been able to make one  that I can prove is in 2N -1 
+
+Ideally I think we will do 2N comparisons if it is not in the array, as we traverse it once for the possibility of it being an increasing vertical element, or it being an increasing horizontal element.
+
+9. btree inserting + deleting
+R,Y,F,X,A,M,C,D,E,T,H,V,L,W,G
+(converted to numbers for actual easy comparisons)
+082 089 070 088 065 077 067 068 069 084 072 086 076 087 071
+
+10. b-tree new version inserts
+
+
+
