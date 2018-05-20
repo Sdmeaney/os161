@@ -79,10 +79,7 @@ void proctable_create(void){
  	for ( int i= 0; i < MAXARRAY; ++i){
 		proctable[i] = NULL;
 	}
-{
-	
-};
-
+	kprintf("proctable_create\n");
 }
 
 void proctable_add(struct proc* p){
@@ -94,6 +91,7 @@ void proctable_add(struct proc* p){
 		p->p_pid = i;
 		p->parent_pid = curproc;
 		proctable[i] = p;
+		kprintf("proctable_added\n");
 		return;
 	}
 
