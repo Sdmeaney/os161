@@ -784,6 +784,11 @@ thread_exit(void)
 
 	cur = curthread;
 
+if(curproc != kproc && curproc != NULL){
+	proc_remthread(cur);
+}
+
+
 #ifdef UW
 	/* threads for user processes should have detached from their process
 	   in sys__exit */
