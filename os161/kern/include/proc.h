@@ -104,7 +104,9 @@ struct addrspace *curproc_setas(struct addrspace *);
 
 void proctable_create(void);
 
-void proctable_add(void);
+void proctable_resize(void);
+
+void proctable_add(struct proc*);
 
 void proctable_remove(void);
 

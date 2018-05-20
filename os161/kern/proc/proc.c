@@ -98,7 +98,7 @@ void proctable_add(struct proc* p){
 
 }
 
-void proctable_resize(){
+void proctable_resize(void){
 	//make the size bigger
 	MAXARRAY = MAXARRAY*2
 	newproctable = kmalloc (sizeof(struct proc *)*MAXARRAY);
