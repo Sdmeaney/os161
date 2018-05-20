@@ -58,7 +58,7 @@ struct proc *kproc;
 pid_t prosid = 2;
 
 // defining proccess table
-// static struct proc ** proctable; // ** pointer to a pointer
+static struct proc ** proctable; // ** pointer to a pointer
 								 // static is so it's not dynamically allocated and so we can reference
 
 /*
@@ -74,7 +74,13 @@ static struct semaphore *proc_count_mutex;
 struct semaphore *no_proc_sem;   
 #endif  // UW
 
+proctable_create(){
+ proctable = kmalloc (sizeof(struct proc *)*256);
+{
+	
+};
 
+}
 
 /*
  * Create a proc structure.
@@ -202,6 +208,7 @@ proc_destroy(struct proc *proc)
 void
 proc_bootstrap(void)
 {
+  proctable_create();
   kproc = proc_create("[kernel]");
   if (kproc == NULL) {
     panic("proc_create for kproc failed\n");

@@ -783,7 +783,7 @@ thread_exit(void)
 	struct thread *cur;
 
 	cur = curthread;
-
+//FIXME griffin fix
 if(curproc != kproc && curproc != NULL){
 	proc_remthread(cur);
 }
@@ -792,7 +792,7 @@ if(curproc != kproc && curproc != NULL){
 #ifdef UW
 	/* threads for user processes should have detached from their process
 	   in sys__exit */
-
+    // this is currently doing it as null? fixme fixed
 	KASSERT (curproc == kproc || curproc == NULL);
 	
 	/* kernel threads don't go through sys__exit, so we detach them from kproc here */
