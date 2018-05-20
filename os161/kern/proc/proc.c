@@ -73,15 +73,51 @@ static struct semaphore *proc_count_mutex;
 /* used to signal the kernel menu thread when there are no processes */
 struct semaphore *no_proc_sem;   
 #endif  // UW
-
+int MAXARRAY = 256;
 void proctable_create(void){
- proctable = kmalloc (sizeof(struct proc *)*256);
-
+ proctable = kmalloc (sizeof(struct proc *)*MAXARRAY);
+ 	for ( int i= 0; i < MAXARRAY; ++i){
+		proctable[i] = NULL;
+	}
 {
 	
 };
 
 }
+
+void proctable_add(struct proc* p){
+	for ( int i= 0; i < MAXARRAY; ++i){
+
+	if (proctable[i] == NULL){
+	//ADD IT
+	}
+
+	}
+
+	// WE'VE LOOPED, NO NULLS
+
+}
+
+void proctable_resize(){
+	//make the size bigger
+	MAXARRAY = MAXARRAY*2
+	newproctable = kmalloc (sizeof(struct proc *)*MAXARRAY);
+	//null out all the values
+ 	for ( int i= 0; i < MAXARRAY; ++i){
+		newproctable[i] = NULL;
+	}
+	//copy over the values
+	for ( int i= 0; i < MAXARRAY/2; i++ ){
+		newproctable[i] = proctable[i];
+	}
+
+	proctable = newproctable
+}
+
+void proctable_remove(void){
+
+}
+
 
 /*
  * Create a proc structure.
