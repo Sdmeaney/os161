@@ -792,8 +792,8 @@ if(curproc != kproc && curproc != NULL){
 #ifdef UW
 	/* threads for user processes should have detached from their process
 	   in sys__exit */
-	KASSERT (curproc == NULL);
-	KASSERT (curproc == kproc);
+
+	KASSERT (curproc == kproc || curproc == NULL);
 	
 	/* kernel threads don't go through sys__exit, so we detach them from kproc here */
 	if (curproc == kproc) {
