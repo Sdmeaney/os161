@@ -91,7 +91,7 @@ void proctable_add(struct proc* p){
 	if (proctable[i] == NULL){
 	//ADD IT
 	}
-
+	p = p;
 	}
 
 	// WE'VE LOOPED, NO NULLS
@@ -101,7 +101,7 @@ void proctable_add(struct proc* p){
 void proctable_resize(void){
 	//make the size bigger
 	MAXARRAY = MAXARRAY*2
-	newproctable = kmalloc (sizeof(struct proc *)*MAXARRAY);
+	struct proc* newproctable = kmalloc (sizeof(struct proc *)*MAXARRAY);
 	//null out all the values
  	for ( int i= 0; i < MAXARRAY; ++i){
 		newproctable[i] = NULL;
@@ -111,7 +111,7 @@ void proctable_resize(void){
 		newproctable[i] = proctable[i];
 	}
 
-	proctable = newproctable
+	proctable = newproctable;
 }
 
 void proctable_remove(void){
