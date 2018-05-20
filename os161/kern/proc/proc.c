@@ -121,6 +121,7 @@ void proctable_resize(void){
 
 void proctable_remove(void){
 
+
 }
 
 
@@ -153,13 +154,13 @@ proc_create(const char *name)
 	proc->p_cwd = NULL;
 
 	/* PID field */
-	proc->p_pid = prosid;
+	//proc->p_pid = prosid;
 	prosid += 1;
 
 #ifdef UW
 	proc->console = NULL;
 #endif // UW
-
+	proctable_add(proc);
 	return proc;
 }
 
