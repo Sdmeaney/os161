@@ -110,6 +110,6 @@ void proctable_resize(void);
 
 void proctable_add(struct proc*);
 
-void proctable_remove(void);
+void proctable_remove(struct proc* p);
 
 #endif /* _PROC_H_ */

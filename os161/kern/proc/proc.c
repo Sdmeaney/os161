@@ -120,11 +120,9 @@ void proctable_resize(void){
 }
 
 void proctable_remove(struct proc* p){
-
-
 		// look through the table to find if it has kids
 		for ( int i= 0; i < MAXARRAY; i++ ){
-			if(proctable[i]->parent_pid == p->pid){
+			if(proctable[i]->parent_pid == p->p_pid){
 				proctable[i]->parent_pid = NULL; //if we have a child set their pids to null
 				if(proctable[i]->zombie = 1);{ // if zombie status of child, clean up child from table
 					proctable[i] = NULL;
@@ -200,7 +198,7 @@ proc_destroy(struct proc *proc)
 
 	KASSERT(proc != NULL);
 	KASSERT(proc != kproc);
-
+	proctable_remove(proc);
 	/*
 	 * We don't take p_lock in here because we must have the only
 	 * reference to this structure. (Otherwise it would be
