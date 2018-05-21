@@ -83,7 +83,7 @@ void proctable_create(void){
 }
 
 void proctable_add(struct proc* p){
-	for ( int i= 0; i < MAXARRAY; ++i){
+	for ( int i= 2; i < MAXARRAY; ++i){
 
 	if (proctable[i] == NULL){
 	//ADD IT
