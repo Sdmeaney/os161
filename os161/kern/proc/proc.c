@@ -70,11 +70,13 @@ static unsigned int proc_count;
 /* provides mutual exclusion for proc_count */
 /* it would be better to use a lock here, but we use a semaphore because locks are not implemented in the base kernel */ 
 static struct semaphore *proc_count_mutex;
+static struct lock *proc_table_mutex;
 /* used to signal the kernel menu thread when there are no processes */
 struct semaphore *no_proc_sem;   
 #endif  // UW
 int MAXARRAY = 256;
 void proctable_create(void){
+ proc_table_mutex = lock_create("proc_table_mutex");
  proctable = kmalloc (sizeof(struct proc *)*MAXARRAY);
  	for ( int i= 0; i < MAXARRAY; ++i){
 		proctable[i] = NULL;
@@ -83,6 +85,7 @@ void proctable_create(void){
 }
 
 void proctable_add(struct proc* p){
+	lock_aquire(proc_table_mutex);
 	p->zombie = 0;
 	for ( int i= 2; i < MAXARRAY; ++i){
 
@@ -93,17 +96,20 @@ void proctable_add(struct proc* p){
 		p->parent = curproc;
 		proctable[i] = p;
 		kprintf("proctable_added\n");
+		lock_release(proc_table_mutex);
 		return;
 		}
 	}
 
 	// WE'VE LOOPED, NO NULLS
+	lock_release(proc_table_mutex);
 	proctable_resize();
 	proctable_add(p);
 	return;
 }
 
 void proctable_resize(void){
+	lock_aquire(proc_table_mutex);
 	//make the size bigger
 	MAXARRAY = MAXARRAY*2;
 	struct proc** newproctable = kmalloc (sizeof(struct proc *)*MAXARRAY);
@@ -117,9 +123,11 @@ void proctable_resize(void){
 	}
 
 	proctable = newproctable;
+	lock_release(proc_table_mutex);
 }
 
 void proctable_remove(struct proc* p){
+		lock_aquire(proc_table_mutex);
 		// look through the table to find if it has kids
 		for ( int i= 0; i < MAXARRAY; i++ ){
 			if(proctable[i]->parent->p_pid == p->p_pid){
@@ -133,10 +141,9 @@ void proctable_remove(struct proc* p){
 		//the child has no parent, delete children if waiting,  we can delete ourselves, and set remaining child pid's to null
 	}
 	else{ //the child has an active parent we set ourselves to wait, 
-		p->zombie = 1;
+			p->zombie = 1;
 		}
-
-
+		lock_release(proc_table_mutex);
 }
 
 
