@@ -148,6 +148,7 @@ void proctable_remove(struct proc* p){
 			p->zombie = 1;
 		}
 		lock_release(proc_table_mutex);
+		kprintf("XX");
 }
 
 
