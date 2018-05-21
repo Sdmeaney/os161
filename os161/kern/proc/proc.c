@@ -85,7 +85,7 @@ void proctable_create(void){
 }
 
 void proctable_add(struct proc* p){
-	lock_aquire(proc_table_mutex);
+	lock_acquire(proc_table_mutex);
 	p->zombie = 0;
 	for ( int i= 2; i < MAXARRAY; ++i){
 
@@ -109,7 +109,7 @@ void proctable_add(struct proc* p){
 }
 
 void proctable_resize(void){
-	lock_aquire(proc_table_mutex);
+	lock_acquire(proc_table_mutex);
 	//make the size bigger
 	MAXARRAY = MAXARRAY*2;
 	struct proc** newproctable = kmalloc (sizeof(struct proc *)*MAXARRAY);
@@ -127,7 +127,7 @@ void proctable_resize(void){
 }
 
 void proctable_remove(struct proc* p){
-		lock_aquire(proc_table_mutex);
+		lock_acquire(proc_table_mutex);
 		// look through the table to find if it has kids
 		for ( int i= 0; i < MAXARRAY; i++ ){
 			if(proctable[i]->parent->p_pid == p->p_pid){
