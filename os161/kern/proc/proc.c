@@ -87,12 +87,13 @@ void proctable_add(struct proc* p){
 
 	if (proctable[i] == NULL){
 	//ADD IT
-	}
+
 		p->p_pid = i;
 		p->parent_pid = curproc;
 		proctable[i] = p;
 		kprintf("proctable_added\n");
 		return;
+		}
 	}
 
 	// WE'VE LOOPED, NO NULLS
