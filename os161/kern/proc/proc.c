@@ -83,6 +83,7 @@ void proctable_create(void){
 }
 
 void proctable_add(struct proc* p){
+	p->zombie = 0;
 	for ( int i= 2; i < MAXARRAY; ++i){
 
 	if (proctable[i] == NULL){
@@ -118,7 +119,24 @@ void proctable_resize(void){
 	proctable = newproctable;
 }
 
-void proctable_remove(void){
+void proctable_remove(struct proc* p){
+
+
+		// look through the table to find if it has kids
+		for ( int i= 0; i < MAXARRAY; i++ ){
+			if(proctable[i]->parent_pid == p->pid){
+				proctable[i]->parent_pid = NULL; //if we have a child set their pids to null
+				if(proctable[i]->zombie = 1);{ // if zombie status of child, clean up child from table
+					proctable[i] = NULL;
+				}
+			}
+		}
+	if (p->parent_pid == NULL){
+		//the child has no parent, delete children if waiting,  we can delete ourselves, and set remaining child pid's to null
+	}
+	else{ //the child has an active parent we set ourselves to wait, 
+		p->zombie = 1;
+		}
 
 
 }

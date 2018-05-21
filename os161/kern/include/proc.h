@@ -61,6 +61,7 @@ struct proc {
 	/* pid */
 	pid_t p_pid;
 	struct proc* parent_pid;
+	int zombie;
 
 #ifdef UW
   /* a vnode to refer to the console device */
