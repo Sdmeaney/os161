@@ -158,7 +158,7 @@ proc_create(const char *name)
 #ifdef UW
 	proc->console = NULL;
 #endif // UW
-	if (proc != kproc){
+	if (kproc != NULL){
 		proctable_add(proc);
 	}
 	return proc;
