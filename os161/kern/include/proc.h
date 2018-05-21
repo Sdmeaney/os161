@@ -60,7 +60,7 @@ struct proc {
 	struct vnode *p_cwd;		/* current working directory */
 	/* pid */
 	pid_t p_pid;
-	struct proc* parent_pid;
+	struct proc* parent;
 	int zombie;
 
 #ifdef UW
