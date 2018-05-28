@@ -360,7 +360,7 @@ cv_wait(struct cv *cv, struct lock *lock)
         spinlock_acquire(cv->cvlock);
         wchan_lock(cv->cvwchan);
         spinlock_release(cv->cvlock);
-        lock_release(*lock);
+        lock_release(lock);
         //wchan sleep
         wchan_sleep(cv->cvwchan);
         //now reaquire the lock
