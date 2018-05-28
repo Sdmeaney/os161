@@ -81,7 +81,7 @@ void proctable_create(void){
  	for ( int i= 0; i < MAXARRAY; ++i){
 		proctable[i] = NULL;
 	}
-	kprintf("proctable_create\n");
+	//kprintf("proctable_create\n");
 }
 
 void proctable_add(struct proc* p){
@@ -95,7 +95,7 @@ void proctable_add(struct proc* p){
 		p->p_pid = i;
 		p->parent = curproc;
 		proctable[i] = p;
-		kprintf("proctable_added\n");
+		//kprintf("proctable_added\n");
 		lock_release(proc_table_mutex);
 		return;
 		}
@@ -109,7 +109,7 @@ void proctable_add(struct proc* p){
 }
 
 void proctable_resize(void){
-	kprintf("proc_resize\n");
+	//kprintf("proc_resize\n");
 	lock_acquire(proc_table_mutex);
 	//make the size bigger
 	MAXARRAY = MAXARRAY*2;
@@ -128,7 +128,7 @@ void proctable_resize(void){
 }
 
 void proctable_remove(struct proc* p){
-		kprintf("proc_remove\n");
+		//kprintf("proc_remove\n");
 		lock_acquire(proc_table_mutex);
 		// look through the table to find if it has kids
 		for ( int i= 0; i < MAXARRAY; i++ ){
@@ -148,7 +148,7 @@ void proctable_remove(struct proc* p){
 			p->zombie = 1;
 		}
 		lock_release(proc_table_mutex);
-		kprintf("XX");
+		//kprintf("XX");
 }
 
 
