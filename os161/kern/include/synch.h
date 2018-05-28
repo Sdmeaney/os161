@@ -129,7 +129,7 @@ struct cv {
         // (don't forget to mark things volatile as needed)
 };
 
-struct cv *cv_create(const char *name);
+struct cv *cv_create(const char *name, struct wchan *cvwchan );
 void cv_destroy(struct cv *);
 
 /*
