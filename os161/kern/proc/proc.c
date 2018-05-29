@@ -286,11 +286,11 @@ proc_destroy(struct proc *proc)
 
 
 	// do I have any parent?
-	if(p->parent != NULL){		//yes, have a parent	
-		lock_acquire(p->proc_lock);
-		p->zombie = 1;
-		cv_broadcast(p->proc_cv, p->proc_lock);
-		lock_release(p->proc_lock);
+	if(proc->parent != NULL){		//yes, have a parent	
+		lock_acquire(proc->proc_lock);
+		proc->zombie = 1;
+		cv_broadcast(proc->proc_cv, proc->proc_lock);
+		lock_release(proc->proc_lock);
 	}
 	else{		//no, I have no parent
 		proctable_remove(proc); // delete it from the table
