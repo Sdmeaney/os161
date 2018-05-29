@@ -295,7 +295,7 @@ proc_destroy(struct proc *proc)
 		}
 		lock_release(proc_table_mutex);
 
-
+kprintf("CCCCCCCCCCCCCCCC");
 
 	// do I have any parent?
 	if(proc->parent != NULL){		//yes, have a parent	
