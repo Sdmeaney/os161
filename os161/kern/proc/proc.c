@@ -98,7 +98,7 @@ void proctable_add(struct proc* p){
 	//ADD IT
 
 		p->p_pid = i;
-		p->parent = curproc;
+		p->parent_pid = curproc->p_pid;
 		proctable[i] = p;
 		//kprintf("proctable_added\n");
 		lock_release(proc_table_mutex);
