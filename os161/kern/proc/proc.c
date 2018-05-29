@@ -85,6 +85,11 @@ void proctable_create(void){
 }
 
 void proctable_add(struct proc* p){
+	if (proc_table_mutex == NULL){
+		p->pid = 1;
+		p->parent = NULL;
+		return;
+	}
 	lock_acquire(proc_table_mutex);
 	p->zombie = 0;
 	for ( int i= 2; i < MAXARRAY; ++i){
@@ -132,30 +137,22 @@ void proctable_remove(struct proc* p){
 		lock_acquire(proc_table_mutex);
 		// look through the table to find if it has kids
 		for ( int i= 0; i < MAXARRAY; i++ ){
-			if(proctable[i] != NULL) {
-				if(proctable[i]->parent == p){
-					proctable[i]->parent = NULL; //if we have a child set their pids to null
-					if(proctable[i]->zombie == 1){ // if zombie status of child, clean up child from table
-						proctable[i] = NULL;
-					}
-				}
+			if(proctable[i]->p_pid == p->p_pid) {
+				proctable[i] = NULL;
+				lock_release(proc_table_mutex);
 			}
 		}
-		lock_release(proc_table_mutex);
-
-	if (p->parent == NULL){
-		//the child has no parent, delete children if waiting,  we can delete ourselves, and set remaining child pid's to null
-	}
-	else{ //the child has an active parent we set ourselves to wait, 
-			lock_acquire(p->proc_lock);
-			p->zombie = 1;
-			cv_broadcast(p->proc_cv, p->proc_lock);
-
-			lock_release(p->proc_lock);
-		}
-		//kprintf("XX");
 }
 
+
+void proc_terminator(struct proc *proc){
+	lock_destroy(proc->proc_lock)
+	cv_destroy(proc->proc_cv)
+	kfree(proc->p_name);
+	threadarray_cleanup(&proc->p_threads);
+	spinlock_cleanup(&proc->p_lock);
+	kfree(proc)
+}
 
 /*
  * Create a proc structure.
@@ -225,18 +222,18 @@ proc_destroy(struct proc *proc)
 
 	KASSERT(proc != NULL);
 	KASSERT(proc != kproc);
-	proctable_remove(proc);
+	/* VFS fields */
+	if (proc->p_cwd) {
+		VOP_DECREF(proc->p_cwd);
+		proc->p_cwd = NULL;
+	}
+
 	/*
 	 * We don't take p_lock in here because we must have the only
 	 * reference to this structure. (Otherwise it would be
 	 * incorrect to destroy it.)
 	 */
 
-	/* VFS fields */
-	if (proc->p_cwd) {
-		VOP_DECREF(proc->p_cwd);
-		proc->p_cwd = NULL;
-	}
 
 
 #ifndef UW  // in the UW version, space destruction occurs in sys_exit, not here
@@ -265,11 +262,40 @@ proc_destroy(struct proc *proc)
 	}
 #endif // UW
 
-	threadarray_cleanup(&proc->p_threads);
-	spinlock_cleanup(&proc->p_lock);
 
-	kfree(proc->p_name);
-	kfree(proc);
+// set all child parent pids to null
+		lock_acquire(proc_table_mutex);
+			for ( int i= 0; i < MAXARRAY; i++ ){
+			if(proctable[i]->parent == p->p_pid) {
+				struct proc *cur_child = proctable[i];
+				lock_acquire(cur_child->proc_lock);
+				cur_child->parent = NULL; //if we have a child set their pids to null	
+				lock_release(cur_child->proc_lock);
+
+				// if child is zombie, call pid_remove
+				if(cur_child->zombie == 1){
+					proctable_remove(cur_child); // delete it from the table
+					proc_terminator(cur_child); // erase it from existance
+
+				}	
+
+			}
+		}
+		lock_release(proc_table_mutex);
+
+
+
+	// do I have any parent?
+	if(p->parent != NULL){		//yes, have a parent	
+		lock_acquire(p->proc_lock);
+		p->zombie = 1;
+		cv_broadcast(p->proc_cv, p->proc_lock);
+		lock_release(p->proc_lock);
+	}
+	else{		//no, I have no parent
+		proctable_remove(proc); // delete it from the table
+		proc_terminator(proc); // erase it from existance
+	}
 
 #ifdef UW
 	/* decrement the process count */

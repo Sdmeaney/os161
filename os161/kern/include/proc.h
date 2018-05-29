@@ -110,9 +110,11 @@ void proctable_resize(void);
 
 void proctable_add(struct proc*);
 
-void proctable_remove(struct proc* p);
+void proctable_remove(struct proc*);
 
 struct proc * proc_number(pid_t);
+
+void proc_terminator(struct proc*);
 
 
 #endif /* _PROC_H_ */

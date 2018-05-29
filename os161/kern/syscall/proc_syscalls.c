@@ -155,8 +155,8 @@ sys_waitpid(pid_t pid,
   while (p->zombie != 1) {
       cv_wait(p->proc_cv,p->proc_lock);
       }
-  lock_release(p->proc_lock);
   exitstatus = p->exitstatus;
+  lock_release(p->proc_lock);
 
   result = copyout((void *)&exitstatus,status,sizeof(int));
   if (result) {
