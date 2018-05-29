@@ -137,7 +137,7 @@ void proctable_remove(struct proc* p){
 		lock_acquire(proc_table_mutex);
 		// look through the table to find if it has kids
 		for ( int i= 0; i < MAXARRAY; i++ ){
-			if(proctable[i]!= NULL;){
+			if(proctable[i]!= NULL){
 				if(proctable[i]->p_pid == p->p_pid) {
 					proctable[i] = NULL;
 					lock_release(proc_table_mutex);
