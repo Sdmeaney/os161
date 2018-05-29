@@ -147,15 +147,6 @@ void proctable_remove(struct proc* p){
 
 void proc_terminator(struct proc *proc){
 
-/*
-         * note: some parts of the process structure, such as the address space,
-         *  are destroyed in sys_exit, before we get here
-         *
-         * note: depending on where this function is called from, curproc may not
-         * be defined because the calling thread may have already detached itself
-         * from the process.
-	 */
-
 	KASSERT(proc != NULL);
 	KASSERT(proc != kproc);
 	proctable_remove(proc);
@@ -196,6 +187,8 @@ void proc_terminator(struct proc *proc){
 	if (proc->console) {
 	  vfs_close(proc->console);
 	}
+#endif // UW
+
 
 
 	lock_destroy(proc->proc_lock);
@@ -315,9 +308,6 @@ proc_destroy(struct proc *proc)
 		proctable_remove(proc); // delete it from the table
 		proc_terminator(proc); // erase it from existance
 	}
-
-
-	
 
 }
 
