@@ -146,7 +146,7 @@ void proctable_remove(struct proc* p){
 
 
 void proc_terminator(struct proc *proc){
-	kprinf("XXXX$$$XXXX");
+	kprintf("XXXX$$$XXXX");
 			KASSERT(proc != NULL);
 			KASSERT(proc != kproc);
 			proctable_remove(proc);
