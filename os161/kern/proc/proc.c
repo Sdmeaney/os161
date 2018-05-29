@@ -321,11 +321,14 @@ kprintf("CCCCCCCCCCCCCCCC");
 void
 proc_bootstrap(void)
 {
-  proctable_create();
+  proc_table_mutex = NULL;
+  proctable = NULL;
+
   kproc = proc_create("[kernel]");
   if (kproc == NULL) {
     panic("proc_create for kproc failed\n");
   }
+  proctable_create();
 #ifdef UW
   proc_count = 0;
   proc_count_mutex = sem_create("proc_count_mutex",1);
