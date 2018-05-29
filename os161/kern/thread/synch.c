@@ -330,7 +330,8 @@ cv_create(const char *name)
                 kfree(cv);
                 return NULL;
         }
-        
+        spinlock_init(&cv>cvlock);
+
         // add stuff here as needed
         
         return cv;

@@ -141,13 +141,18 @@ void proctable_remove(struct proc* p){
 				}
 			}
 		}
+		lock_release(proc_table_mutex);
+
 	if (p->parent == NULL){
 		//the child has no parent, delete children if waiting,  we can delete ourselves, and set remaining child pid's to null
 	}
 	else{ //the child has an active parent we set ourselves to wait, 
+			lock_acquire(p->proc_lock);
 			p->zombie = 1;
+			cv_broadcast(p->proc_cv, p->proc_lock);
+
+			lock_release(p->proc_lock);
 		}
-		lock_release(proc_table_mutex);
 		//kprintf("XX");
 }
 
@@ -183,6 +188,12 @@ proc_create(const char *name)
 	/* PID field */
 	//proc->p_pid = prosid;
 	prosid += 1;
+
+	proc->proc_wchan = wchan_create("proc_wchan"); //added
+	proc->proc_cv = cv_create("proc_cv"); // added cv
+	proc->proc_lock = lock_create("proc_lock");
+	spinlock_init(&proc->proc_spinlock);
+
 
 #ifdef UW
 	proc->console = NULL;

@@ -21,7 +21,11 @@ void sys__exit(int exitcode) {
   struct proc *p = curproc;
   /* for now, just include this to keep the compiler from complaining about
      an unused variable */
-  (void)exitcode;
+  
+
+  lock_aquire(p->proc_lock);
+  p->exitstatus = _MKWAIT_EXIT(exitcode);
+  lock_release(p->proc_lock);
 
   DEBUG(DB_SYSCALL,"Syscall: _exit(%d)\n",exitcode);
 
@@ -141,8 +145,17 @@ sys_waitpid(pid_t pid,
   if (options != 0) {
     return(EINVAL);
   }
-  /* for now, just pretend the exitstatus is 0 */
-  exitstatus = 0;
+
+  struct proc *p = proctable[pid];
+  
+  lock_aquire(p->proc_lock);
+
+  while (p->zombie != 1) {
+      cv_wait(p->proc_cv,p->proc_lock);
+      }
+  lock_release(p->proc_lock);
+  exitcode = p->exitstatus;
+
   result = copyout((void *)&exitstatus,status,sizeof(int));
   if (result) {
     return(result);
