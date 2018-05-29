@@ -58,11 +58,13 @@ struct proc {
 	struct vnode *p_cwd;		/* current working directory */
 	/* pid */
 	pid_t p_pid;
+	pid_t parent_pid;
 	struct proc* parent;
 	int zombie;
 	struct lock *proc_lock;
 	struct cv *proc_cv;
 	int exitstatus;
+
 #ifdef UW
   /* a vnode to refer to the console device */
   /* this is a quick-and-dirty way to get console writes working */
