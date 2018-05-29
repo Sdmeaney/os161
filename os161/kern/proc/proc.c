@@ -202,6 +202,12 @@ proc_create(const char *name)
 	return proc;
 }
 
+struct proc * proc_number(pid_t pid){
+	lock_acquire(proc_table_mutex);
+	struct proc *proc_number_var =  proc_table[pid];
+	lock_release(proc_table_mutex);
+	return proc_number_var;
+}
 /*
  * Destroy a proc structure.
  */

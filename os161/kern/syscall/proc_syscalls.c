@@ -147,7 +147,8 @@ sys_waitpid(pid_t pid,
     return(EINVAL);
   }
 
-  struct proc *p = proctable[pid];
+  struct proc *p = proc_number(pid);
+
   
   lock_acquire(p->proc_lock);
 

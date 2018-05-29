@@ -52,10 +52,8 @@ struct proc {
 	char *p_name;			/* Name of this process */
 	struct spinlock p_lock;		/* Lock for this structure */
 	struct threadarray p_threads;	/* Threads in this process */
-
 	/* VM */
 	struct addrspace *p_addrspace;	/* virtual address space */
-
 	/* VFS */
 	struct vnode *p_cwd;		/* current working directory */
 	/* pid */
@@ -113,5 +111,8 @@ void proctable_resize(void);
 void proctable_add(struct proc*);
 
 void proctable_remove(struct proc* p);
+
+struct proc * proc_number(pid_t);
+
 
 #endif /* _PROC_H_ */
