@@ -151,7 +151,7 @@ void proc_terminator(struct proc *proc){
 	kprintf("XXXX$$$XXXX");
 			KASSERT(proc != NULL);
 			KASSERT(proc != kproc);
-			proctable_remove(proc);
+			//proctable_remove(proc);
 			/*
 			 * We don't take p_lock in here because we must have the only
 			 * reference to this structure. (Otherwise it would be
