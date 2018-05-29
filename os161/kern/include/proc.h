@@ -62,8 +62,8 @@ struct proc {
 	pid_t p_pid;
 	struct proc* parent;
 	int zombie;
-	struct lock proc_lock;
-	struct cv proc_cv;
+	struct lock *proc_lock;
+	struct cv *proc_cv;
 	int exitstatus;
 #ifdef UW
   /* a vnode to refer to the console device */

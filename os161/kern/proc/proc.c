@@ -189,10 +189,8 @@ proc_create(const char *name)
 	//proc->p_pid = prosid;
 	prosid += 1;
 
-	proc->proc_wchan = wchan_create("proc_wchan"); //added
 	proc->proc_cv = cv_create("proc_cv"); // added cv
 	proc->proc_lock = lock_create("proc_lock");
-	spinlock_init(&proc->proc_spinlock);
 
 
 #ifdef UW
