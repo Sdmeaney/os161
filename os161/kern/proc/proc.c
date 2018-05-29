@@ -250,7 +250,7 @@ proc_create(const char *name)
 
 	proc->proc_cv = cv_create("proc_cv"); // added cv
 	proc->proc_lock = lock_create("proc_lock");
-
+	proc->parent_pid = curproc->p_pid;
 
 #ifdef UW
 	proc->console = NULL;
@@ -281,9 +281,8 @@ proc_destroy(struct proc *proc)
 		lock_acquire(proc_table_mutex);
 			for ( int i= 0; i < MAXARRAY; i++ ){
 			kprintf("@");
-
 			if(proctable[i] != NULL){			
-				if(proctable[i]->parent->p_pid == proc->p_pid) {
+				if(proctable[i]->parent_pid == proc->p_pid) {
 					struct proc *cur_child = proctable[i];
 					lock_acquire(cur_child->proc_lock);
 					cur_child->parent = NULL; //if we have a child set their pids to null	
