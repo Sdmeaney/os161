@@ -133,7 +133,7 @@ void proctable_resize(void){
 }
 
 void proctable_remove(struct proc* p){
-		//kprintf("proc_remove\n");
+		kprintf("proc_remove\n");
 		lock_acquire(proc_table_mutex);
 		// look through the table to find if it has kids
 		for ( int i= 0; i < MAXARRAY; i++ ){
