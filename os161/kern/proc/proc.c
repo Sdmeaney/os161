@@ -289,7 +289,7 @@ proc_destroy(struct proc *proc)
 					lock_release(cur_child->proc_lock);
 					// if child is zombie, call pid_remove
 					if(cur_child->zombie == 1){
-						//proctable_remove(cur_child); // delete it from the table
+						proctable_remove(cur_child); // delete it from the table
 						proc_terminator(cur_child); // erase it from existance
 
 					}	
@@ -309,7 +309,7 @@ kprintf("CCCCCCCCCCCCCCCC");
 		lock_release(proc->proc_lock);
 	}
 	else{		//no, I have no parent
-		//proctable_remove(proc); // delete it from the table
+		proctable_remove(proc); // delete it from the table
 		proc_terminator(proc); // erase it from existance
 	}
 
