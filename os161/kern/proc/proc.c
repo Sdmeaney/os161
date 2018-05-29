@@ -280,7 +280,7 @@ proc_destroy(struct proc *proc)
 			for ( int i= 0; i < MAXARRAY; i++ ){
 			kprintf("@");
 
-			if(proctable[i]->parent != NULL){			
+			if(proctable[i] != NULL){			
 				if(proctable[i]->parent->p_pid == proc->p_pid) {
 					struct proc *cur_child = proctable[i];
 					lock_acquire(cur_child->proc_lock);
