@@ -10,7 +10,7 @@
 #include <addrspace.h>
 #include <copyinout.h>
 #include <mips/trapframe.h>
-#include <sync.h>
+#include <synch.h>
 
 
   /* this implementation of sys__exit does not do anything with the exit code */
@@ -149,7 +149,7 @@ sys_waitpid(pid_t pid,
 
   struct proc *p = proctable[pid];
   
-  lock_aquire(p->proc_lock);
+  lock_acquire(p->proc_lock);
 
   while (p->zombie != 1) {
       cv_wait(p->proc_cv,p->proc_lock);
