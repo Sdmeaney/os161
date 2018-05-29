@@ -86,7 +86,7 @@ void proctable_create(void){
 
 void proctable_add(struct proc* p){
 	if (proc_table_mutex == NULL){
-		p->pid = 1;
+		p->p_pid = 1;
 		p->parent = NULL;
 		return;
 	}
