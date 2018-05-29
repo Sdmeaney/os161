@@ -62,8 +62,9 @@ struct proc {
 	pid_t p_pid;
 	struct proc* parent;
 	int zombie;
-	struct wchan proc_wchan;
-	struct spinlnock proc_spinlock;
+	struct lock proc_lock;
+	struct cv proc_cv;
+	int exitstatus;
 #ifdef UW
   /* a vnode to refer to the console device */
   /* this is a quick-and-dirty way to get console writes working */
