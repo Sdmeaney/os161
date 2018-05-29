@@ -271,7 +271,7 @@ struct proc * proc_number(pid_t pid){
 void
 proc_destroy(struct proc *proc)
 {
-	
+	kprintf("OOOOOOOOOOOOOOOOOO");
 	KASSERT(proc != NULL);
 	KASSERT(proc != kproc);
 
