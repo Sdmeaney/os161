@@ -321,9 +321,9 @@ kprintf("CCCCCCCCCCCCCCCC");
 void
 proc_bootstrap(void)
 {
+  kprintf('ZZZZ');
   proc_table_mutex = NULL;
   proctable = NULL;
-  kprintf('ZZZZ');
   kproc = proc_create("[kernel]");
   if (kproc == NULL) {
     panic("proc_create for kproc failed\n");
