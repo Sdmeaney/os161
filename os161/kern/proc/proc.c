@@ -146,12 +146,79 @@ void proctable_remove(struct proc* p){
 
 
 void proc_terminator(struct proc *proc){
+
+/*
+         * note: some parts of the process structure, such as the address space,
+         *  are destroyed in sys_exit, before we get here
+         *
+         * note: depending on where this function is called from, curproc may not
+         * be defined because the calling thread may have already detached itself
+         * from the process.
+	 */
+
+	KASSERT(proc != NULL);
+	KASSERT(proc != kproc);
+	proctable_remove(proc);
+	/*
+	 * We don't take p_lock in here because we must have the only
+	 * reference to this structure. (Otherwise it would be
+	 * incorrect to destroy it.)
+	 */
+
+	/* VFS fields */
+	if (proc->p_cwd) {
+		VOP_DECREF(proc->p_cwd);
+		proc->p_cwd = NULL;
+	}
+
+
+#ifndef UW  // in the UW version, space destruction occurs in sys_exit, not here
+	if (proc->p_addrspace) {
+		/*
+		 * In case p is the currently running process (which
+		 * it might be in some circumstances, or if this code
+		 * gets moved into exit as suggested above), clear
+		 * p_addrspace before calling as_destroy. Otherwise if
+		 * as_destroy sleeps (which is quite possible) when we
+		 * come back we'll be calling as_activate on a
+		 * half-destroyed address space. This tends to be
+		 * messily fatal.
+		 */
+		struct addrspace *as;
+
+		as_deactivate();
+		as = curproc_setas(NULL);
+		as_destroy(as);
+	}
+#endif // UW
+
+#ifdef UW
+	if (proc->console) {
+	  vfs_close(proc->console);
+	}
+
+
 	lock_destroy(proc->proc_lock);
 	cv_destroy(proc->proc_cv);
 	kfree(proc->p_name);
 	threadarray_cleanup(&proc->p_threads);
 	spinlock_cleanup(&proc->p_lock);
 	kfree(proc);
+
+	#ifdef UW
+	/* decrement the process count */
+        /* note: kproc is not included in the process count, but proc_destroy
+	   is never called on kproc (see KASSERT above), so we're OK to decrement
+	   the proc_count unconditionally here */
+	P(proc_count_mutex); 
+	KASSERT(proc_count > 0);
+	proc_count--;
+	/* signal the kernel menu thread if the process count has reached zero */
+	if (proc_count == 0) {
+	  V(no_proc_sem);
+	}
+	V(proc_count_mutex);
+#endif // UW
 }
 
 /*
@@ -211,57 +278,9 @@ struct proc * proc_number(pid_t pid){
 void
 proc_destroy(struct proc *proc)
 {
-	/*
-         * note: some parts of the process structure, such as the address space,
-         *  are destroyed in sys_exit, before we get here
-         *
-         * note: depending on where this function is called from, curproc may not
-         * be defined because the calling thread may have already detached itself
-         * from the process.
-	 */
-
+	
 	KASSERT(proc != NULL);
 	KASSERT(proc != kproc);
-	/* VFS fields */
-	if (proc->p_cwd) {
-		VOP_DECREF(proc->p_cwd);
-		proc->p_cwd = NULL;
-	}
-
-	/*
-	 * We don't take p_lock in here because we must have the only
-	 * reference to this structure. (Otherwise it would be
-	 * incorrect to destroy it.)
-	 */
-
-
-
-#ifndef UW  // in the UW version, space destruction occurs in sys_exit, not here
-	if (proc->p_addrspace) {
-		/*
-		 * In case p is the currently running process (which
-		 * it might be in some circumstances, or if this code
-		 * gets moved into exit as suggested above), clear
-		 * p_addrspace before calling as_destroy. Otherwise if
-		 * as_destroy sleeps (which is quite possible) when we
-		 * come back we'll be calling as_activate on a
-		 * half-destroyed address space. This tends to be
-		 * messily fatal.
-		 */
-		struct addrspace *as;
-
-		as_deactivate();
-		as = curproc_setas(NULL);
-		as_destroy(as);
-	}
-#endif // UW
-
-#ifdef UW
-	if (proc->console) {
-	  vfs_close(proc->console);
-	}
-#endif // UW
-
 
 // set all child parent pids to null
 		lock_acquire(proc_table_mutex);
@@ -297,20 +316,7 @@ proc_destroy(struct proc *proc)
 		proc_terminator(proc); // erase it from existance
 	}
 
-#ifdef UW
-	/* decrement the process count */
-        /* note: kproc is not included in the process count, but proc_destroy
-	   is never called on kproc (see KASSERT above), so we're OK to decrement
-	   the proc_count unconditionally here */
-	P(proc_count_mutex); 
-	KASSERT(proc_count > 0);
-	proc_count--;
-	/* signal the kernel menu thread if the process count has reached zero */
-	if (proc_count == 0) {
-	  V(no_proc_sem);
-	}
-	V(proc_count_mutex);
-#endif // UW
+
 	
 
 }
