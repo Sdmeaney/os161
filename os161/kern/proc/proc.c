@@ -277,9 +277,9 @@ proc_destroy(struct proc *proc)
 
 // set all child parent pids to null
 		lock_acquire(proc_table_mutex);
-						kprintf("ZZZZZZZZZ");
-
 			for ( int i= 0; i < MAXARRAY; i++ ){
+
+			if(proc->parent != NULL){			
 			if(proctable[i]->parent->p_pid == proc->p_pid) {
 				struct proc *cur_child = proctable[i];
 				lock_acquire(cur_child->proc_lock);
@@ -294,6 +294,7 @@ proc_destroy(struct proc *proc)
 				}	
 
 			}
+		}
 		}
 		lock_release(proc_table_mutex);
 
