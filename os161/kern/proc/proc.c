@@ -204,7 +204,7 @@ proc_create(const char *name)
 
 struct proc * proc_number(pid_t pid){
 	lock_acquire(proc_table_mutex);
-	struct proc *proc_number_var =  proc_table[pid];
+	struct proc *proc_number_var =  proctable[pid];
 	lock_release(proc_table_mutex);
 	return proc_number_var;
 }
