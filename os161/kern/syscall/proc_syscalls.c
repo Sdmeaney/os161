@@ -23,7 +23,7 @@ void sys__exit(int exitcode) {
      an unused variable */
   
 
-  lock_aquire(p->proc_lock);
+  lock_acquire(p->proc_lock);
   p->exitstatus = _MKWAIT_EXIT(exitcode);
   lock_release(p->proc_lock);
 
@@ -154,7 +154,7 @@ sys_waitpid(pid_t pid,
       cv_wait(p->proc_cv,p->proc_lock);
       }
   lock_release(p->proc_lock);
-  exitcode = p->exitstatus;
+  exitstatus = p->exitstatus;
 
   result = copyout((void *)&exitstatus,status,sizeof(int));
   if (result) {
